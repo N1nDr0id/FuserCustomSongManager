@@ -1,0 +1,7 @@
+*.spec
+src/db_bak/
+src/db_bak1/
+src/db/
+src/__pycache__/
+src/downloader/
+src/song_extractor/

@@ -1,0 +1,1332 @@
+[
+    {
+        "filename": "adoreyou",
+        "song_name": "Adore You",
+        "song_artist": "Harry Styles",
+        "song_bpm": 99,
+        "song_genre": "Pop",
+        "song_key": "Eb",
+        "song_mode": "Major",
+        "song_year": 2019
+    },
+    {
+        "filename": "alittlerespect",
+        "song_name": "A Little Respect",
+        "song_artist": "Erasure",
+        "song_bpm": 114,
+        "song_genre": "Pop",
+        "song_key": "C",
+        "song_mode": "Major",
+        "song_year": 1988
+    },
+    {
+        "filename": "alot",
+        "song_name": "a lot",
+        "song_artist": "21 Savage",
+        "song_bpm": 146,
+        "song_genre": "HipHop",
+        "song_key": "Bb",
+        "song_mode": "Major",
+        "song_year": 2018
+    },
+    {
+        "filename": "alwaysontime",
+        "song_name": "Always On Time",
+        "song_artist": "Ja Rule ft. Ashanti",
+        "song_bpm": 97,
+        "song_genre": "RnB",
+        "song_key": "C",
+        "song_mode": "Minor",
+        "song_year": 2001
+    },
+    {
+        "filename": "amongtheliving",
+        "song_name": "Among The Living",
+        "song_artist": "Anthrax",
+        "song_bpm": 104,
+        "song_genre": "Rock",
+        "song_key": "E",
+        "song_mode": "Major",
+        "song_year": 1987
+    },
+    {
+        "filename": "animals",
+        "song_name": "Animals",
+        "song_artist": "Martin Garrix",
+        "song_bpm": 128,
+        "song_genre": "Dance",
+        "song_key": "F",
+        "song_mode": "Minor",
+        "song_year": 2013
+    },
+    {
+        "filename": "apache",
+        "song_name": "Apache (2012)",
+        "song_artist": "The Sugarhill Gang",
+        "song_bpm": 115,
+        "song_genre": "HipHop",
+        "song_key": "A",
+        "song_mode": "Minor",
+        "song_year": 1981
+    },
+    {
+        "filename": "astronautintheocean",
+        "song_name": "Astronaut In The Ocean",
+        "song_artist": "Masked Wolf",
+        "song_bpm": 150,
+        "song_genre": "HipHop",
+        "song_key": "E",
+        "song_mode": "Minor",
+        "song_year": 2019
+    },
+    {
+        "filename": "babyimjealous",
+        "song_name": "Baby, I'm Jealous",
+        "song_artist": "Bebe Rexha ft. Doja Cat",
+        "song_bpm": 98,
+        "song_genre": "Pop",
+        "song_key": "B",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "boombastic",
+        "song_name": "Boombastic (Hot Shot 2020)",
+        "song_artist": "Shaggy",
+        "song_bpm": 90,
+        "song_genre": "LatinAndCaribbean",
+        "song_key": "D",
+        "song_mode": "Major",
+        "song_year": 1995
+    },
+    {
+        "filename": "bop",
+        "song_name": "BOP",
+        "song_artist": "DaBaby",
+        "song_bpm": 127,
+        "song_genre": "HipHop",
+        "song_key": "Eb",
+        "song_mode": "Minor",
+        "song_year": 2019
+    },
+    {
+        "filename": "breakingme",
+        "song_name": "Breaking Me",
+        "song_artist": "Topic with A7S",
+        "song_bpm": 122,
+        "song_genre": "Dance",
+        "song_key": "Ab",
+        "song_mode": "Minor",
+        "song_year": 2019
+    },
+    {
+        "filename": "bringmetolife",
+        "song_name": "Bring Me To Life",
+        "song_artist": "Evanescence",
+        "song_bpm": 95,
+        "song_genre": "Rock",
+        "song_key": "E",
+        "song_mode": "Minor",
+        "song_year": 2003
+    },
+    {
+        "filename": "buddyholly",
+        "song_name": "Buddy Holly",
+        "song_artist": "Weezer",
+        "song_bpm": 121,
+        "song_genre": "Rock",
+        "song_key": "Ab",
+        "song_mode": "Major",
+        "song_year": 1994
+    },
+    {
+        "filename": "burningdownthehouse",
+        "song_name": "Burning Down The House",
+        "song_artist": "Talking Heads",
+        "song_bpm": 104,
+        "song_genre": "Rock",
+        "song_key": "G",
+        "song_mode": "Major",
+        "song_year": 1983
+    },
+    {
+        "filename": "circles",
+        "song_name": "Circles",
+        "song_artist": "Post Malone",
+        "song_bpm": 120,
+        "song_genre": "Pop",
+        "song_key": "C",
+        "song_mode": "Major",
+        "song_year": 2019
+    },
+    {
+        "filename": "concalma",
+        "song_name": "Con Calma",
+        "song_artist": "Daddy Yankee ft. Snow",
+        "song_bpm": 94,
+        "song_genre": "LatinAndCaribbean",
+        "song_key": "Ab",
+        "song_mode": "Minor",
+        "song_year": 2019
+    },
+    {
+        "filename": "countingstars",
+        "song_name": "Counting Stars",
+        "song_artist": "OneRepublic",
+        "song_bpm": 122,
+        "song_genre": "Pop",
+        "song_key": "E",
+        "song_mode": "Major",
+        "song_year": 2013
+    },
+    {
+        "filename": "cradles",
+        "song_name": "Cradles",
+        "song_artist": "Sub Urban",
+        "song_bpm": 90,
+        "song_genre": "Dance",
+        "song_key": "Bb",
+        "song_mode": "Minor",
+        "song_year": 2019
+    },
+    {
+        "filename": "crankdat",
+        "song_name": "Crank That (Soulja Boy)",
+        "song_artist": "Soulja Boy Tell 'Em",
+        "song_bpm": 140,
+        "song_genre": "HipHop",
+        "song_key": "C",
+        "song_mode": "Minor",
+        "song_year": 2007
+    },
+    {
+        "filename": "crystalbeach",
+        "song_name": "Crystal Beach",
+        "song_artist": "The Lingala Sound",
+        "song_bpm": 110,
+        "song_genre": "Dance",
+        "song_key": "E",
+        "song_mode": "Minor",
+        "song_year": 2016
+    },
+    {
+        "filename": "dancingsnotacrime",
+        "song_name": "Dancing's Not A Crime",
+        "song_artist": "Panic! At The Disco",
+        "song_bpm": 94,
+        "song_genre": "Pop",
+        "song_key": "Db",
+        "song_mode": "Major",
+        "song_year": 2018
+    },
+    {
+        "filename": "daysahead",
+        "song_name": "Days Ahead, Days Behind",
+        "song_artist": "Some Lover",
+        "song_bpm": 124,
+        "song_genre": "Country",
+        "song_key": "C",
+        "song_mode": "Major",
+        "song_year": 1995
+    },
+    {
+        "filename": "daysgoby",
+        "song_name": "Days Go By",
+        "song_artist": "Dirty Vegas",
+        "song_bpm": 127,
+        "song_genre": "Dance",
+        "song_key": "D",
+        "song_mode": "Minor",
+        "song_year": 2001
+    },
+    {
+        "filename": "djgotusfallinginlove",
+        "song_name": "DJ Got Us Fallin' In Love",
+        "song_artist": "Usher ft. Pitbull",
+        "song_bpm": 120,
+        "song_genre": "Pop",
+        "song_key": "G",
+        "song_mode": "Minor",
+        "song_year": 2010
+    },
+    {
+        "filename": "dontyoudare",
+        "song_name": "Don't You Dare",
+        "song_artist": "Free Sheets",
+        "song_bpm": 157,
+        "song_genre": "HipHop",
+        "song_key": "Eb",
+        "song_mode": "Minor",
+        "song_year": 2001
+    },
+    {
+        "filename": "dreams",
+        "song_name": "Dreams",
+        "song_artist": "Fleetwood Mac",
+        "song_bpm": 121,
+        "song_genre": "Rock",
+        "song_key": "C",
+        "song_mode": "Major",
+        "song_year": 1977
+    },
+    {
+        "filename": "feelssogood",
+        "song_name": "Feel So Good",
+        "song_artist": "Mase",
+        "song_bpm": 105,
+        "song_genre": "HipHop",
+        "song_key": "Eb",
+        "song_mode": "Major",
+        "song_year": 1997
+    },
+    {
+        "filename": "fireburning",
+        "song_name": "Fire Burning",
+        "song_artist": "Sean Kingston",
+        "song_bpm": 123,
+        "song_genre": "LatinAndCaribbean",
+        "song_key": "Bb",
+        "song_mode": "Minor",
+        "song_year": 2009
+    },
+    {
+        "filename": "followyou",
+        "song_name": "Follow You",
+        "song_artist": "Imagine Dragons",
+        "song_bpm": 125,
+        "song_genre": "Rock",
+        "song_key": "A",
+        "song_mode": "Major",
+        "song_year": 2021
+    },
+    {
+        "filename": "fridayiminlove",
+        "song_name": "Friday I'm In Love",
+        "song_artist": "The Cure",
+        "song_bpm": 140,
+        "song_genre": "Rock",
+        "song_key": "Eb",
+        "song_mode": "Major",
+        "song_year": 1992
+    },
+    {
+        "filename": "funkycoldmedina",
+        "song_name": "Funky Cold Medina",
+        "song_artist": "Tone-Loc",
+        "song_bpm": 118,
+        "song_genre": "HipHop",
+        "song_key": "G",
+        "song_mode": "Major",
+        "song_year": 1989
+    },
+    {
+        "filename": "gentleonmymind",
+        "song_name": "Gentle On My Mind",
+        "song_artist": "Glen Campbell",
+        "song_bpm": 110,
+        "song_genre": "Country",
+        "song_key": "Eb",
+        "song_mode": "Major",
+        "song_year": 1967
+    },
+    {
+        "filename": "getbusy",
+        "song_name": "Get Busy",
+        "song_artist": "Sean Paul",
+        "song_bpm": 100,
+        "song_genre": "LatinAndCaribbean",
+        "song_key": "F",
+        "song_mode": "Minor",
+        "song_year": 2002
+    },
+    {
+        "filename": "golden",
+        "song_name": "Golden",
+        "song_artist": "Harry Styles",
+        "song_bpm": 140,
+        "song_genre": "Pop",
+        "song_key": "E",
+        "song_mode": "Minor",
+        "song_year": 2019
+    },
+    {
+        "filename": "gravelpit",
+        "song_name": "Gravel Pit",
+        "song_artist": "Wu-Tang Clan",
+        "song_bpm": 121,
+        "song_genre": "HipHop",
+        "song_key": "A",
+        "song_mode": "Minor",
+        "song_year": 2000
+    },
+    {
+        "filename": "grooveisintheheart",
+        "song_name": "Groove Is In The Heart",
+        "song_artist": "Deee-Lite",
+        "song_bpm": 122,
+        "song_genre": "Pop",
+        "song_key": "Ab",
+        "song_mode": "Minor",
+        "song_year": 1990
+    },
+    {
+        "filename": "happier",
+        "song_name": "Happier",
+        "song_artist": "Marshmello ft. Bastille",
+        "song_bpm": 100,
+        "song_genre": "Dance",
+        "song_key": "F",
+        "song_mode": "Major",
+        "song_year": 2018
+    },
+    {
+        "filename": "headandheart",
+        "song_name": "Head & Heart",
+        "song_artist": "Joel Corry ft. MNEK",
+        "song_bpm": 123,
+        "song_genre": "Pop",
+        "song_key": "F",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "herecomesthehotstepper",
+        "song_name": "Here Comes The Hotstepper (Heartical Mix)",
+        "song_artist": "Ini Kamoze",
+        "song_bpm": 100,
+        "song_genre": "LatinAndCaribbean",
+        "song_key": "B",
+        "song_mode": "Minor",
+        "song_year": 1994
+    },
+    {
+        "filename": "higher",
+        "song_name": "Higher",
+        "song_artist": "Shawn Mendes",
+        "song_bpm": 120,
+        "song_genre": "Pop",
+        "song_key": "F",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "hiphophooray",
+        "song_name": "Hip Hop Hooray",
+        "song_artist": "Naughty By Nature",
+        "song_bpm": 99,
+        "song_genre": "HipHop",
+        "song_key": "Ab",
+        "song_mode": "Minor",
+        "song_year": 1993
+    },
+    {
+        "filename": "holdingoutforahero",
+        "song_name": "Holding Out for a Hero",
+        "song_artist": "Bonnie Tyler",
+        "song_bpm": 150,
+        "song_genre": "Rock",
+        "song_key": "A",
+        "song_mode": "Minor",
+        "song_year": 1984
+    },
+    {
+        "filename": "iloveit",
+        "song_name": "I Love It",
+        "song_artist": "Icona Pop ft. Charli XCX",
+        "song_bpm": 126,
+        "song_genre": "Pop",
+        "song_key": "Ab",
+        "song_mode": "Major",
+        "song_year": 2012
+    },
+    {
+        "filename": "ily",
+        "song_name": "ily (i love you baby)",
+        "song_artist": "Surf Mesa ft. Emilee",
+        "song_bpm": 112,
+        "song_genre": "Dance",
+        "song_key": "D",
+        "song_mode": "Major",
+        "song_year": 2019
+    },
+    {
+        "filename": "imeltwithyou",
+        "song_name": "I Melt With You",
+        "song_artist": "Modern English",
+        "song_bpm": 156,
+        "song_genre": "Pop",
+        "song_key": "C",
+        "song_mode": "Major",
+        "song_year": 1982
+    },
+    {
+        "filename": "imgonnabe",
+        "song_name": "I'm Gonna Be (500 Miles)",
+        "song_artist": "The Proclaimers",
+        "song_bpm": 132,
+        "song_genre": "Rock",
+        "song_key": "E",
+        "song_mode": "Major",
+        "song_year": 1988
+    },
+    {
+        "filename": "insideout",
+        "song_name": "Inside Out",
+        "song_artist": "Zedd & Griff",
+        "song_bpm": 146,
+        "song_genre": "Dance",
+        "song_key": "D",
+        "song_mode": "Major",
+        "song_year": 2020
+    },
+    {
+        "filename": "ironic",
+        "song_name": "Ironic",
+        "song_artist": "Alanis Morissette",
+        "song_bpm": 90,
+        "song_genre": "Pop",
+        "song_key": "B",
+        "song_mode": "Major",
+        "song_year": 1995
+    },
+    {
+        "filename": "juice",
+        "song_name": "Juice",
+        "song_artist": "Lizzo",
+        "song_bpm": 120,
+        "song_genre": "HipHop",
+        "song_key": "D",
+        "song_mode": "Minor",
+        "song_year": 2019
+    },
+    {
+        "filename": "kingsandqueens",
+        "song_name": "Kings & Queens",
+        "song_artist": "Ava Max",
+        "song_bpm": 130,
+        "song_genre": "Pop",
+        "song_key": "Db",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "kissandmakeup",
+        "song_name": "Kiss and Make Up",
+        "song_artist": "Dua Lipa & BLACKPINK",
+        "song_bpm": 100,
+        "song_genre": "Pop",
+        "song_key": "Eb",
+        "song_mode": "Major",
+        "song_year": 2018
+    },
+    {
+        "filename": "latch",
+        "song_name": "Latch",
+        "song_artist": "Disclosure ft. Sam Smith",
+        "song_bpm": 122,
+        "song_genre": "Dance",
+        "song_key": "Ab",
+        "song_mode": "Major",
+        "song_year": 2012
+    },
+    {
+        "filename": "leavealittlelove",
+        "song_name": "Leave A Little Love",
+        "song_artist": "Alesso & Armin van Buuren",
+        "song_bpm": 118,
+        "song_genre": "Dance",
+        "song_key": "G",
+        "song_mode": "Minor",
+        "song_year": 2021
+    },
+    {
+        "filename": "letslove",
+        "song_name": "Let's Love",
+        "song_artist": "David Guetta & Sia",
+        "song_bpm": 157,
+        "song_genre": "Dance",
+        "song_key": "D",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "levitating",
+        "song_name": "Levitating",
+        "song_artist": "Dua Lipa",
+        "song_bpm": 103,
+        "song_genre": "Pop",
+        "song_key": "B",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "lifeisahighway",
+        "song_name": "Life Is A Highway",
+        "song_artist": "Rascal Flatts",
+        "song_bpm": 103,
+        "song_genre": "Country",
+        "song_key": "F",
+        "song_mode": "Major",
+        "song_year": 2006
+    },
+    {
+        "filename": "lights",
+        "song_name": "Lights",
+        "song_artist": "Ellie Goulding",
+        "song_bpm": 120,
+        "song_genre": "Pop",
+        "song_key": "Ab",
+        "song_mode": "Minor",
+        "song_year": 2010
+    },
+    {
+        "filename": "linger",
+        "song_name": "Linger",
+        "song_artist": "The Cranberries",
+        "song_bpm": 96,
+        "song_genre": "Rock",
+        "song_key": "D",
+        "song_mode": "Major",
+        "song_year": 1993
+    },
+    {
+        "filename": "lipslikesugar",
+        "song_name": "Lips Like Sugar",
+        "song_artist": "Echo & The Bunnymen",
+        "song_bpm": 130,
+        "song_genre": "Rock",
+        "song_key": "B",
+        "song_mode": "Major",
+        "song_year": 1987
+    },
+    {
+        "filename": "livinlavidaloca",
+        "song_name": "Livin' La Vida Loca",
+        "song_artist": "Ricky Martin",
+        "song_bpm": 157,
+        "song_genre": "LatinAndCaribbean",
+        "song_key": "Db",
+        "song_mode": "Minor",
+        "song_year": 1999
+    },
+    {
+        "filename": "lococontigo",
+        "song_name": "Loco Contigo",
+        "song_artist": "DJ Snake, J. Balvin & Tyga",
+        "song_bpm": 96,
+        "song_genre": "LatinAndCaribbean",
+        "song_key": "Db",
+        "song_mode": "Minor",
+        "song_year": 2019
+    },
+    {
+        "filename": "lookwhatyouvedone",
+        "song_name": "Look What You've Done",
+        "song_artist": "Zara Larsson",
+        "song_bpm": 118,
+        "song_genre": "Pop",
+        "song_key": "C",
+        "song_mode": "Major",
+        "song_year": 2021
+    },
+    {
+        "filename": "looppack01",
+        "song_name": "Loop Pack 01",
+        "song_artist": "Faint Shadow",
+        "song_bpm": 114,
+        "song_genre": "Dance",
+        "song_key": "F",
+        "song_mode": "Major",
+        "song_year": 2021
+    },
+    {
+        "filename": "looppack07",
+        "song_name": "Loop Pack 07",
+        "song_artist": "Faint Shadow",
+        "song_bpm": 134,
+        "song_genre": "Dance",
+        "song_key": "G",
+        "song_mode": "Minor",
+        "song_year": 2021
+    },
+    {
+        "filename": "looppack11",
+        "song_name": "Loop Pack 11",
+        "song_artist": "TK Sun",
+        "song_bpm": 108,
+        "song_genre": "Dance",
+        "song_key": "C",
+        "song_mode": "Major",
+        "song_year": 2021
+    },
+    {
+        "filename": "looppack12",
+        "song_name": "Loop Pack 12",
+        "song_artist": "Dissentor",
+        "song_bpm": 132,
+        "song_genre": "Dance",
+        "song_key": "D",
+        "song_mode": "Minor",
+        "song_year": 2021
+    },
+    {
+        "filename": "low",
+        "song_name": "Low",
+        "song_artist": "Flo Rida ft. T-Pain",
+        "song_bpm": 128,
+        "song_genre": "HipHop",
+        "song_key": "Eb",
+        "song_mode": "Minor",
+        "song_year": 2007
+    },
+    {
+        "filename": "lowrider",
+        "song_name": "Low Rider",
+        "song_artist": "War",
+        "song_bpm": 142,
+        "song_genre": "Rock",
+        "song_key": "G",
+        "song_mode": "Major",
+        "song_year": 1975
+    },
+    {
+        "filename": "maneater",
+        "song_name": "Maneater",
+        "song_artist": "Daryl Hall & John Oates",
+        "song_bpm": 90,
+        "song_genre": "Rock",
+        "song_key": "B",
+        "song_mode": "Minor",
+        "song_year": 1982
+    },
+    {
+        "filename": "manoftheyear",
+        "song_name": "Man of the Year",
+        "song_artist": "ScHoolboy Q",
+        "song_bpm": 112,
+        "song_genre": "HipHop",
+        "song_key": "G",
+        "song_mode": "Minor",
+        "song_year": 2013
+    },
+    {
+        "filename": "maps",
+        "song_name": "Maps",
+        "song_artist": "Maroon 5",
+        "song_bpm": 120,
+        "song_genre": "Pop",
+        "song_key": "Db",
+        "song_mode": "Minor",
+        "song_year": 2014
+    },
+    {
+        "filename": "maskoff",
+        "song_name": "Mask Off",
+        "song_artist": "Future",
+        "song_bpm": 150,
+        "song_genre": "HipHop",
+        "song_key": "D",
+        "song_mode": "Minor",
+        "song_year": 2017
+    },
+    {
+        "filename": "megusta",
+        "song_name": "Me Gusta",
+        "song_artist": "Anitta ft. Cardi B & Myke Towers",
+        "song_bpm": 110,
+        "song_genre": "LatinAndCaribbean",
+        "song_key": "Gb",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "montero",
+        "song_name": "MONTERO (Call Me By Your Name)",
+        "song_artist": "Lil Nas X",
+        "song_bpm": 90,
+        "song_genre": "Pop",
+        "song_key": "Ab",
+        "song_mode": "Minor",
+        "song_year": 2021
+    },
+    {
+        "filename": "mood",
+        "song_name": "Mood",
+        "song_artist": "24kGoldn ft. iann dior",
+        "song_bpm": 91,
+        "song_genre": "HipHop",
+        "song_key": "Bb",
+        "song_mode": "Major",
+        "song_year": 2020
+    },
+    {
+        "filename": "mrbrightside",
+        "song_name": "Mr. Brightside",
+        "song_artist": "The Killers",
+        "song_bpm": 148,
+        "song_genre": "Rock",
+        "song_key": "Db",
+        "song_mode": "Major",
+        "song_year": 2003
+    },
+    {
+        "filename": "murdershewrote",
+        "song_name": "Murder She Wrote",
+        "song_artist": "Chaka Demus & Pliers",
+        "song_bpm": 96,
+        "song_genre": "LatinAndCaribbean",
+        "song_key": "D",
+        "song_mode": "Major",
+        "song_year": 1992
+    },
+    {
+        "filename": "myexsbestfriend",
+        "song_name": "my ex's best friend",
+        "song_artist": "Machine Gun Kelly & blackbear",
+        "song_bpm": 125,
+        "song_genre": "Rock",
+        "song_key": "F",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "myheadandmyheart",
+        "song_name": "My Head & My Heart",
+        "song_artist": "Ava Max",
+        "song_bpm": 116,
+        "song_genre": "Pop",
+        "song_key": "A",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "newrules",
+        "song_name": "New Rules",
+        "song_artist": "Dua Lipa",
+        "song_bpm": 116,
+        "song_genre": "Pop",
+        "song_key": "A",
+        "song_mode": "Minor",
+        "song_year": 2017
+    },
+    {
+        "filename": "norolemodelz",
+        "song_name": "No Role Modelz",
+        "song_artist": "J. Cole",
+        "song_bpm": 100,
+        "song_genre": "HipHop",
+        "song_key": "F",
+        "song_mode": "Minor",
+        "song_year": 2014
+    },
+    {
+        "filename": "nothingbreakslikeaheart",
+        "song_name": "Nothing Breaks Like a Heart",
+        "song_artist": "Mark Ronson ft. Miley Cyrus",
+        "song_bpm": 114,
+        "song_genre": "Pop",
+        "song_key": "G",
+        "song_mode": "Minor",
+        "song_year": 2018
+    },
+    {
+        "filename": "numb",
+        "song_name": "Numb",
+        "song_artist": "Linkin Park",
+        "song_bpm": 110,
+        "song_genre": "Rock",
+        "song_key": "Gb",
+        "song_mode": "Minor",
+        "song_year": 2003
+    },
+    {
+        "filename": "onething",
+        "song_name": "1 Thing",
+        "song_artist": "Amerie",
+        "song_bpm": 100,
+        "song_genre": "RnB",
+        "song_key": "Gb",
+        "song_mode": "Major",
+        "song_year": 2005
+    },
+    {
+        "filename": "pidelimon",
+        "song_name": "pi de lim\u00c3\u00b3n",
+        "song_artist": "ximena",
+        "song_bpm": 140,
+        "song_genre": "Dance",
+        "song_key": "Gb",
+        "song_mode": "Major",
+        "song_year": 2021
+    },
+    {
+        "filename": "poison",
+        "song_name": "Poison",
+        "song_artist": "Bell Biv DeVoe",
+        "song_bpm": 111,
+        "song_genre": "RnB",
+        "song_key": "Gb",
+        "song_mode": "Minor",
+        "song_year": 1990
+    },
+    {
+        "filename": "redlights",
+        "song_name": "Red Lights",
+        "song_artist": "Ti\u00c3\u00absto",
+        "song_bpm": 125,
+        "song_genre": "Dance",
+        "song_key": "Bb",
+        "song_mode": "Major",
+        "song_year": 2013
+    },
+    {
+        "filename": "renegades",
+        "song_name": "Renegades",
+        "song_artist": "X Ambassadors",
+        "song_bpm": 90,
+        "song_genre": "Rock",
+        "song_key": "B",
+        "song_mode": "Minor",
+        "song_year": 2015
+    },
+    {
+        "filename": "rockyourbody",
+        "song_name": "Rock Your Body",
+        "song_artist": "Justin Timberlake",
+        "song_bpm": 101,
+        "song_genre": "Pop",
+        "song_key": "E",
+        "song_mode": "Minor",
+        "song_year": 2002
+    },
+    {
+        "filename": "rosesimanbek",
+        "song_name": "Roses (Imanbek Remix)",
+        "song_artist": "SAINt JHN",
+        "song_bpm": 122,
+        "song_genre": "Dance",
+        "song_key": "F",
+        "song_mode": "Minor",
+        "song_year": 2019
+    },
+    {
+        "filename": "royceplease",
+        "song_name": "Royce Please",
+        "song_artist": "Beast Business",
+        "song_bpm": 150,
+        "song_genre": "HipHop",
+        "song_key": "A",
+        "song_mode": "Minor",
+        "song_year": 2016
+    },
+    {
+        "filename": "rumors",
+        "song_name": "Rumors",
+        "song_artist": "Lizzo ft. Cardi B",
+        "song_bpm": 119,
+        "song_genre": "Pop",
+        "song_key": "B",
+        "song_mode": "Major",
+        "song_year": 2021
+    },
+    {
+        "filename": "sandstorm",
+        "song_name": "Sandstorm",
+        "song_artist": "Darude",
+        "song_bpm": 136,
+        "song_genre": "Dance",
+        "song_key": "E",
+        "song_mode": "Minor",
+        "song_year": 1999
+    },
+    {
+        "filename": "savage",
+        "song_name": "Savage",
+        "song_artist": "Megan Thee Stallion",
+        "song_bpm": 90,
+        "song_genre": "HipHop",
+        "song_key": "Eb",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "selfesteem",
+        "song_name": "Self Esteem",
+        "song_artist": "The Offspring",
+        "song_bpm": 106,
+        "song_genre": "Rock",
+        "song_key": "A",
+        "song_mode": "Minor",
+        "song_year": 1994
+    },
+    {
+        "filename": "sevennationarmy",
+        "song_name": "Seven Nation Army",
+        "song_artist": "The White Stripes",
+        "song_bpm": 123,
+        "song_genre": "Rock",
+        "song_key": "E",
+        "song_mode": "Minor",
+        "song_year": 2003
+    },
+    {
+        "filename": "shedrivesmecrazy",
+        "song_name": "She Drives Me Crazy",
+        "song_artist": "Fine Young Cannibals",
+        "song_bpm": 109,
+        "song_genre": "Rock",
+        "song_key": "D",
+        "song_mode": "Major",
+        "song_year": 1988
+    },
+    {
+        "filename": "shookonesptii",
+        "song_name": "Shook Ones, Pt. II",
+        "song_artist": "Mobb Deep",
+        "song_bpm": 94,
+        "song_genre": "HipHop",
+        "song_key": "Bb",
+        "song_mode": "Minor",
+        "song_year": 1995
+    },
+    {
+        "filename": "shouldistayorshouldigo",
+        "song_name": "Should I Stay or Should I Go",
+        "song_artist": "The Clash",
+        "song_bpm": 113,
+        "song_genre": "Rock",
+        "song_key": "D",
+        "song_mode": "Major",
+        "song_year": 1982
+    },
+    {
+        "filename": "smokeonthewater",
+        "song_name": "Smoke On The Water",
+        "song_artist": "Deep Purple",
+        "song_bpm": 113,
+        "song_genre": "Rock",
+        "song_key": "G",
+        "song_mode": "Minor",
+        "song_year": 1972
+    },
+    {
+        "filename": "sourcandy",
+        "song_name": "Sour Candy",
+        "song_artist": "Lady Gaga & BLACKPINK",
+        "song_bpm": 120,
+        "song_genre": "Pop",
+        "song_key": "A",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "starships",
+        "song_name": "Starships",
+        "song_artist": "Nicki Minaj",
+        "song_bpm": 125,
+        "song_genre": "Pop",
+        "song_key": "D",
+        "song_mode": "Major",
+        "song_year": 2012
+    },
+    {
+        "filename": "stay",
+        "song_name": "STAY",
+        "song_artist": "The Kid LAROI",
+        "song_bpm": 157,
+        "song_genre": "Pop",
+        "song_key": "Bb",
+        "song_mode": "Minor",
+        "song_year": 2021
+    },
+    {
+        "filename": "stronger",
+        "song_name": "Stronger (What Doesn't Kill You)",
+        "song_artist": "Kelly Clarkson",
+        "song_bpm": 116,
+        "song_genre": "Pop",
+        "song_key": "C",
+        "song_mode": "Major",
+        "song_year": 2011
+    },
+    {
+        "filename": "superfreak",
+        "song_name": "Super Freak",
+        "song_artist": "Rick James",
+        "song_bpm": 132,
+        "song_genre": "RnB",
+        "song_key": "A",
+        "song_mode": "Minor",
+        "song_year": 1981
+    },
+    {
+        "filename": "taintedlove",
+        "song_name": "Tainted Love",
+        "song_artist": "Soft Cell",
+        "song_bpm": 145,
+        "song_genre": "Pop",
+        "song_key": "G",
+        "song_mode": "Minor",
+        "song_year": 1981
+    },
+    {
+        "filename": "takeovercontrol",
+        "song_name": "Take Over Control",
+        "song_artist": "Afrojack ft. Eva Simons",
+        "song_bpm": 130,
+        "song_genre": "Dance",
+        "song_key": "C",
+        "song_mode": "Minor",
+        "song_year": 2010
+    },
+    {
+        "filename": "takeyoudancing",
+        "song_name": "Take You Dancing",
+        "song_artist": "Jason Derulo",
+        "song_bpm": 113,
+        "song_genre": "Pop",
+        "song_key": "D",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "thebusiness",
+        "song_name": "The Business",
+        "song_artist": "Ti\u00c3\u00absto",
+        "song_bpm": 120,
+        "song_genre": "Dance",
+        "song_key": "Ab",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "thegamegotyou",
+        "song_name": "The Game Got You",
+        "song_artist": "Skrewbert",
+        "song_bpm": 150,
+        "song_genre": "Dance",
+        "song_key": "Gb",
+        "song_mode": "Minor",
+        "song_year": 2016
+    },
+    {
+        "filename": "thenightporter",
+        "song_name": "The Night Porter",
+        "song_artist": "Winnage",
+        "song_bpm": 129,
+        "song_genre": "Dance",
+        "song_key": "G",
+        "song_mode": "Minor",
+        "song_year": 2010
+    },
+    {
+        "filename": "thereforeiam",
+        "song_name": "Therefore I Am",
+        "song_artist": "Billie Eilish",
+        "song_bpm": 94,
+        "song_genre": "Pop",
+        "song_key": "D",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "thisishow",
+        "song_name": "This Is How You Left Me",
+        "song_artist": "Marlon Kane",
+        "song_bpm": 90,
+        "song_genre": "RnB",
+        "song_key": "A",
+        "song_mode": "Minor",
+        "song_year": 1969
+    },
+    {
+        "filename": "toomuch",
+        "song_name": "Too Much",
+        "song_artist": "Marshmello, Imanbek ft. Usher",
+        "song_bpm": 126,
+        "song_genre": "Dance",
+        "song_key": "Gb",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "trapqueen",
+        "song_name": "Trap Queen",
+        "song_artist": "Fetty Wap",
+        "song_bpm": 148,
+        "song_genre": "HipHop",
+        "song_key": "A",
+        "song_mode": "Minor",
+        "song_year": 2014
+    },
+    {
+        "filename": "tubthumping",
+        "song_name": "Tubthumping",
+        "song_artist": "Chumbawamba",
+        "song_bpm": 104,
+        "song_genre": "Rock",
+        "song_key": "D",
+        "song_mode": "Major",
+        "song_year": 1997
+    },
+    {
+        "filename": "unanochemas",
+        "song_name": "Una Noche M\u00c3\u00a1s",
+        "song_artist": "La Guerra Naranja",
+        "song_bpm": 96,
+        "song_genre": "LatinAndCaribbean",
+        "song_key": "F",
+        "song_mode": "Minor",
+        "song_year": 2001
+    },
+    {
+        "filename": "unbelievable",
+        "song_name": "Unbelievable",
+        "song_artist": "EMF",
+        "song_bpm": 104,
+        "song_genre": "Pop",
+        "song_key": "Ab",
+        "song_mode": "Major",
+        "song_year": 1990
+    },
+    {
+        "filename": "unforgettable",
+        "song_name": "Unforgettable",
+        "song_artist": "French Montana ft. Swae Lee",
+        "song_bpm": 98,
+        "song_genre": "HipHop",
+        "song_key": "Ab",
+        "song_mode": "Minor",
+        "song_year": 2017
+    },
+    {
+        "filename": "venus",
+        "song_name": "Venus",
+        "song_artist": "Bananarama",
+        "song_bpm": 126,
+        "song_genre": "Pop",
+        "song_key": "E",
+        "song_mode": "Minor",
+        "song_year": 1986
+    },
+    {
+        "filename": "walkingonsunshine",
+        "song_name": "Walking On Sunshine",
+        "song_artist": "Katrina and the Waves",
+        "song_bpm": 109,
+        "song_genre": "Pop",
+        "song_key": "Bb",
+        "song_mode": "Major",
+        "song_year": 1983
+    },
+    {
+        "filename": "weliketoparty",
+        "song_name": "We Like to Party! (The Vengabus)",
+        "song_artist": "Vengaboys",
+        "song_bpm": 136,
+        "song_genre": "Dance",
+        "song_key": "Ab",
+        "song_mode": "Major",
+        "song_year": 1998
+    },
+    {
+        "filename": "wellerman",
+        "song_name": "Soon May The Wellerman Come",
+        "song_artist": "Cap'n Spicy Dill",
+        "song_bpm": 97,
+        "song_genre": "Pop",
+        "song_key": "C",
+        "song_mode": "Minor",
+        "song_year": 1860
+    },
+    {
+        "filename": "whatifs",
+        "song_name": "What Ifs",
+        "song_artist": "Kane Brown ft. Lauren Alaina",
+        "song_bpm": 126,
+        "song_genre": "Country",
+        "song_key": "G",
+        "song_mode": "Minor",
+        "song_year": 2016
+    },
+    {
+        "filename": "whatislove",
+        "song_name": "What Is Love",
+        "song_artist": "Haddaway",
+        "song_bpm": 124,
+        "song_genre": "Dance",
+        "song_key": "G",
+        "song_mode": "Minor",
+        "song_year": 1993
+    },
+    {
+        "filename": "whatspoppin",
+        "song_name": "WHATS POPPIN",
+        "song_artist": "Jack Harlow",
+        "song_bpm": 145,
+        "song_genre": "HipHop",
+        "song_key": "E",
+        "song_mode": "Minor",
+        "song_year": 2020
+    },
+    {
+        "filename": "wherethemgirlsat",
+        "song_name": "Where Them Girls At",
+        "song_artist": "David Guetta ft. Nicki Minaj & Flo Rida",
+        "song_bpm": 130,
+        "song_genre": "Dance",
+        "song_key": "Eb",
+        "song_mode": "Major",
+        "song_year": 2011
+    },
+    {
+        "filename": "whineup",
+        "song_name": "Whine Up",
+        "song_artist": "Kat DeLuna ft. Elephant Man",
+        "song_bpm": 125,
+        "song_genre": "LatinAndCaribbean",
+        "song_key": "Db",
+        "song_mode": "Minor",
+        "song_year": 2007
+    },
+    {
+        "filename": "whoompthereitis",
+        "song_name": "Whoomp! There It Is",
+        "song_artist": "Tag Team",
+        "song_bpm": 130,
+        "song_genre": "HipHop",
+        "song_key": "B",
+        "song_mode": "Major",
+        "song_year": 1993
+    },
+    {
+        "filename": "xotourllif3",
+        "song_name": "XO Tour Llif3",
+        "song_artist": "Lil Uzi Vert",
+        "song_bpm": 155,
+        "song_genre": "HipHop",
+        "song_key": "B",
+        "song_mode": "Minor",
+        "song_year": 2017
+    },
+    {
+        "filename": "youngdumbandbroke",
+        "song_name": "Young Dumb & Broke",
+        "song_artist": "Khalid",
+        "song_bpm": 137,
+        "song_genre": "RnB",
+        "song_key": "Gb",
+        "song_mode": "Major",
+        "song_year": 2017
+    },
+    {
+        "filename": "yourlove9pm",
+        "song_name": "Your Love (9PM)",
+        "song_artist": "ATB, Topic, A7S",
+        "song_bpm": 126,
+        "song_genre": "Dance",
+        "song_key": "A",
+        "song_mode": "Minor",
+        "song_year": 2021
+    }
+]
