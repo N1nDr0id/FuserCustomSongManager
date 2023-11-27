@@ -15,6 +15,7 @@ import os
 import sys
 import re
 from configparser import ConfigParser
+import webbrowser
 
 # FUSER CUSTOM SONG MANAGER, by Lilly :)
 
@@ -59,6 +60,7 @@ class SongEditDialog(simpledialog.Dialog):
         #def __init__(self, *args, **kwargs):
 
     def body(self, master):
+        self.iconbitmap("gui_icons/program_icon.ico")
         # show immutable song info at the top
         width_padding = 5
         height_padding = 5
@@ -194,7 +196,7 @@ def get_two_nums_from_input(var1, var2, search_type_string):
             return_nums.append(smaller_num)
             return_nums.append(larger_num)
     return return_nums
-    
+
 
 # First time popup window, which appears when launching the manager for the first time
 class FirstTimePopup(tk.Toplevel):
@@ -273,7 +275,7 @@ class ConfigDialog(simpledialog.Dialog):
 
     def body(self, master):
         self.result = False
-
+        self.iconbitmap("gui_icons/program_icon.ico")
         self.fuser_path = tk.StringVar(value=prog_properties.fuser_directory)
         #self.database_path = tk.StringVar(value=prog_properties.database_location)
         self.install_type = tk.StringVar(value=prog_properties.launcher_type.name)
@@ -307,25 +309,13 @@ class ConfigDialog(simpledialog.Dialog):
         #return True
 
     def apply(self):
-        #new_enabled_state = self.is_enabled_var.get()
-        #print(new_enabled_state)
-        #new_rating = self.rating_stringvar.get()
-        #print(new_rating)
-        #new_notes = self.notes_entry.get("1.0", tk.END)[:-1]
-        #new_author = self.author_entry.get()
-        #self.result = (new_enabled_state, new_rating, new_notes, new_author)
-        print(self.fuser_path.get().replace("/", "\\"))
-        #print(self.database_path.get().replace("/", "\\"))
-        print(self.install_type.get())
-        print(self.executable_path.get().replace("/", "\\"))
-        
+        # Save results from input
         prog_properties.fuser_directory = self.fuser_path.get().replace("/", "\\")
-        #prog_properties.database_location = self.database_path.get().replace("/", "\\")
         prog_properties.launcher_type = LauncherType[self.install_type.get()]
         prog_properties.executable_path = self.executable_path.get().replace("/", "\\")
 
+        # return results
         self.result = True
-        #print(self.result)
 
 # Search dialog, allowing users to search by various metrics of a song
 class SearchDialog(simpledialog.Dialog):
@@ -338,7 +328,7 @@ class SearchDialog(simpledialog.Dialog):
 
     def body(self, master):
         self.result = False
-
+        self.iconbitmap("gui_icons/program_icon.ico")
         tk.Label(master, text="Search by...", justify="left").pack(anchor='w')
         main_frame = tk.Frame(master)
         main_frame.pack()
@@ -417,10 +407,7 @@ class SearchDialog(simpledialog.Dialog):
         self.search_first_bpm_entry.grid(row=0, column=1)
         self.search_second_bpm_entry.grid(row=1, column=1)
 
-        #tk.Button(artist_frame, text="OK").pack()
-
-        #(search by song name, artist name, year range, bpm range, genre type)
-
+        #(search by song name, artist name, year range, genre type, key and mode, or bpm range)
         self.notebook.add(filename_frame, text="Filename")
         self.notebook.add(song_frame, text="Song Name")
         self.notebook.add(artist_frame, text="Artist")
@@ -430,18 +417,15 @@ class SearchDialog(simpledialog.Dialog):
         self.notebook.add(bpm_frame, text="BPM Range")
 
         return self.search_song_name_entry # initial focus
-        #return True
 
     def apply(self):
-        # get tab that self.notebook was on
-        # based on tab, set query type
-        selection = self.notebook.tab(self.notebook.select(), "text")
         query = 'SELECT * from songs WHERE '
         remaining_query = ''
-        # TODO: refactor this so that way rather than using a select statement, we just iterate through all of the items in the searchboxes, making a compound query as we go
-        # idea: make an array that contains all of the subqueries we want to process, then combine them all into a single query, placing " AND " after each query, but not after the last one
+
+        # make an array that contains all of the subqueries we want to process, then combine them all into a single query, placing " AND " after each query, but not after the last one
         queries = []
 
+        # If these entries have data, add them to the query list
         if (len(self.search_filename_var.get()) != 0):
             queries.append("UPPER(filename) LIKE '%" + self.search_filename_var.get().replace("'", "''").upper() + "%'")
         
@@ -462,13 +446,11 @@ class SearchDialog(simpledialog.Dialog):
         if (len(self.key_var.get()) != 0):
             key_string = self.key_var.get()
             key_int = SongKey[key_string].value
-            #remaining_query += f"key = {key_int}"
             queries.append(f"key = {key_int}")
         
         if (len(self.mode_var.get()) != 0):
             mode_string = self.mode_var.get()
             mode_int = SongMode[mode_string].value
-            #remaining_query += 
             queries.append(f"mode = {mode_int}")
         
         if (len(self.first_bpm_var.get()) != 0):
@@ -482,94 +464,15 @@ class SearchDialog(simpledialog.Dialog):
         if (len(self.genre_var.get()) != 0):
             genre_string = self.genre_var.get()
             genre_int = Genres[genre_string].value
-            #remaining_query = f"genre = {genre_int}"
             queries.append(f"genre = {genre_int}")
 
-        # match selection:
-        #     case "Filename":
-        #         #remaining_query = "UPPER(filename) LIKE '%" + self.search_filename_var.get().replace("'", "''").upper() + "%'"
-        #         queries.append("UPPER(filename) LIKE '%" + self.search_filename_var.get().replace("'", "''").upper() + "%'")
-        #     case "Song Name":
-        #         #remaining_query = "UPPER(name) LIKE '%" + self.search_song_name_var.get().replace("'", "''").upper() + "%'"
-        #         queries.append("UPPER(name) LIKE '%" + self.search_song_name_var.get().replace("'", "''").upper() + "%'")
-        #     case "Artist":
-        #         #remaining_query = "UPPER(artist) LIKE '%" + self.search_artist_name_var.get().replace("'", "''").upper() + "%'"
-        #         queries.append("UPPER(artist) LIKE '%" + self.search_artist_name_var.get().replace("'", "''").upper() + "%'")
-        #     case "Year":
-        #         first_num = re.search(r'\d+', self.first_year_var.get())
-        #         if first_num == None:
-        #             messagebox.showerror("Entry error", "First number in year search has no numbers!\nPlease try again.")
-        #             return
-        #         first_num = first_num.group()
-        #         if (len(self.second_year_var.get()) == 0):
-        #             # we only have a single number
-        #             #remaining_query = f"year = {first_num}"
-        #             queries.append(f"year = {first_num}")
-        #         else:
-        #             # we have two nums, search for a range
-        #             # ensure second num is valid
-        #             second_num = re.search(r'\d+', self.second_year_var.get())
-        #             if second_num == None:
-        #                 messagebox.showerror("Entry error", "Second number in year search has no numbers!\nPlease try again.")
-        #                 return
-        #             second_num = second_num.group()
-        #             larger_num = max(int(first_num), int(second_num))
-        #             smaller_num = min(int(first_num), int(second_num))
-        #             #remaining_query = f"year >= {smaller_num} AND year <= {larger_num}"
-        #             queries.append(f"year >= {smaller_num} AND year <= {larger_num}")
-        #     case "Key & Mode":
-        #         key_string = self.key_var.get()
-        #         mode_string = self.mode_var.get()
-        #         if len(key_string) == 0 and len(mode_string) == 0:
-        #             return
-        #         if len(key_string) != 0:
-        #             key_int = SongKey[key_string].value
-        #             #remaining_query += f"key = {key_int}"
-        #             queries.append(f"key = {key_int}")
-        #         if len(key_string) != 0 and len(mode_string) != 0:
-        #             remaining_query += " AND "
-        #         if len(mode_string) != 0:
-        #             mode_int = SongMode[mode_string].value
-        #             #remaining_query += 
-        #             queries.append(f"mode = {mode_int}")
-        #     case "BPM Range":
-        #         first_num = re.search(r'\d+', self.first_bpm_var.get())
-        #         if first_num == None:
-        #             messagebox.showerror("Entry error", "First number in BPM search has no numbers!\nPlease try again.")
-        #             return
-        #         first_num = first_num.group()
-        #         if (len(self.second_bpm_var.get()) == 0):
-        #             # we only have a single number
-        #             #remaining_query = f"bpm = {first_num}"
-        #             queries.append(f"bpm = {first_num}")
-        #         else:
-        #             # we have two nums, search for a range
-        #             # ensure second num is valid
-        #             second_num = re.search(r'\d+', self.second_bpm_var.get())
-        #             if second_num == None:
-        #                 messagebox.showerror("Entry error", "Second number in BPM search has no numbers!\nPlease try again.")
-        #                 return
-        #             second_num = second_num.group()
-        #             larger_num = max(int(first_num), int(second_num))
-        #             smaller_num = min(int(first_num), int(second_num))
-        #             #remaining_query = f"bpm >= {smaller_num} AND bpm <= {larger_num}"
-        #             queries.append(f"bpm >= {smaller_num} AND bpm <= {larger_num}")
-        #     case "Genre":
-        #         genre_string = self.genre_var.get()
-        #         if len(genre_string) == 0:
-        #             return
-        #         genre_int = Genres[genre_string].value
-        #         #remaining_query = f"genre = {genre_int}"
-        #         queries.append(f"genre = {genre_int}")
-        #     case _: # default
-        #         return
+        # Get the final remaining query and add it onto the beginning query
         remaining_query = query_array_to_string(queries)
-        #print(remaining_query)
         if (len(remaining_query) == 0):
             return
         query += remaining_query
+        # Save query result for use later
         self.result = query
-        #print(self.result)
 
 
 #--------------------------------
@@ -771,13 +674,34 @@ def clear_search(clear_button):
     clear_button.configure(state='disabled')
 
 def show_about():
-    version_number = "v0.1"
+    version_number = "v0.7"
+
+    popup = tk.Toplevel()
+    popup.focus_force()
+    popup.grab_set()
+    popup.title("About")
+    popup.iconbitmap("gui_icons/program_icon.ico")
+
     about_text = f"""Fuser Custom Song Manager, {version_number}
 by N1nDr0id/Lilly.
 
-More text here at some point! Hopefully!
-"""
-    messagebox.showinfo(f"Fuser Custom Song Manager {version_number}", about_text)
+Made with love for the Fuser community. <3
+
+Built using Python, Tkinter, PyPAKParser, and more.
+
+Special thanks to Narrik Synthfox and riyvk for contributing to this program, 
+as well as thanks to those who tested the program."""
+    canvas = tk.Canvas(popup, width=64, height=64)
+    canvas.pack(padx=20, pady=10)
+    popup.logo = tk.PhotoImage(file="gui_icons/program_icon.png").subsample(2, 2)
+    canvas.create_image(0, 0, anchor=tk.NW, image=popup.logo)
+    ttk.Label(popup, text=about_text, justify=tk.CENTER).pack(padx=20, pady=10)
+    buttons_frame = tk.Frame(popup)
+    button1 = ttk.Button(buttons_frame, text="View on GitHub", command=lambda: webbrowser.open_new_tab("https://github.com/N1nDr0id/FuserCustomSongManager"))
+    button2 = ttk.Button(buttons_frame, text="Latest release", command=lambda: webbrowser.open_new_tab("https://github.com/N1nDr0id/FuserCustomSongManager/releases/latest"))
+    button1.grid(row=0, column=0)
+    button2.grid(row=0, column=1)
+    buttons_frame.pack(padx=20, pady=10)
 
 s = ttk.Style()
 s.configure('TButton', anchor=tk.W)
