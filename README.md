@@ -1,10 +1,15 @@
 # Fuser Custom Song Manager
- An all-in-one custom song manager for Fuser.
+An all-in-one custom song manager for Fuser.
  
- More info to be added here soon!
+More info to be added here soon!
 
- ### Building
- To build the application, you need PyInstaller downloaded. Then:
+### Instructions
+To run this program, downloaded the latest release from the Releases section, then unzip into a folder and run "Fuser Custom Song Manager.exe".
+
+You can also choose to download the latest executable within the dist folder. NOTE: this version is typically in development and may not be ready for use.
+
+### Building
+To build the application, you need PyInstaller downloaded. Then:
 
 ```shell
 pyinstaller manager.py --onefile --windowed --icon=gui_icons/program_icon.ico --name="Fuser Custom Song Manager"
