@@ -8,3 +8,4 @@ src/song_extractor/
 src/build
 src/dist
 *.zip
+build/
