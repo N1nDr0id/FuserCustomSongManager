@@ -736,7 +736,7 @@ def clear_search(clear_button):
     clear_button.configure(state='disabled')
 
 def show_about():
-    version_number = "v0.8"
+    version_number = "v0.8.1"
 
     popup = tk.Toplevel()
     popup.focus_force()
