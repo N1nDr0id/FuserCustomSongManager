@@ -529,7 +529,7 @@ def refresh_list(clear_button):
 
     # use function to get new songs from unlocked and disabled song paths
     db_connection = init_database(prog_properties.database_location, prog_properties.enabled_directory, prog_properties.disabled_directory, False)
-    db_songs = execute_db_read_query(db_connection, "SELECT * from songs")
+    db_songs = execute_db_read_query(db_connection, "SELECT * from songs ORDER BY filename")
 
     # fill out tree view
     for i in range(len(db_songs)):
@@ -586,29 +586,57 @@ def add_song(treeview, prog_properties):
 
     for i in range(len(filenames)):
         if filenames[i].endswith(".pak"):
+            # TODO: check if file exists in enabled or disabled directories. if so, do NOT try to add it
             # immediately copy into enabled_directory and quit
             # assume .sig file exists next to .pak file
             #print(filenames[i])
             pak_file_path = filenames[i]
             sig_file_path = pak_file_path[:-3] + "sig"
-            dest_pak = prog_properties.enabled_directory + "\\" + os.path.basename(pak_file_path)
-            dest_sig = prog_properties.enabled_directory + "\\" + os.path.basename(sig_file_path)
+            possible_pak_enabled_path = get_folder_path_to_file(os.path.basename(pak_file_path), prog_properties.enabled_directory)
+            possible_sig_enabled_path = get_folder_path_to_file(os.path.basename(sig_file_path), prog_properties.enabled_directory)
+            possible_pak_disabled_path = get_folder_path_to_file(os.path.basename(pak_file_path), prog_properties.disabled_directory)
+            possible_sig_disabled_path = get_folder_path_to_file(os.path.basename(sig_file_path), prog_properties.disabled_directory)
+            dest_pak = ""
+            dest_sig = ""
+
             # check if sig file exists. if not, raise error and skip this file
             if not os.path.exists(sig_file_path):
                 messagebox.showwarning(".sig file missing", f"The .sig file that corresponds with the .pak file\n{pak_file_path}\ndoes not exist. Skipping this .pak file.")
                 continue
-            shutil.copyfile(pak_file_path, dest_pak)
-            shutil.copyfile(sig_file_path, dest_sig)
+            if (possible_pak_enabled_path != None and possible_sig_enabled_path != None and possible_pak_disabled_path != None and possible_sig_disabled_path != None):
+                # if song somehow exists in both enabled path and disabled path, show an error and skip this song
+                messagebox.showwarning("Duplicate files exist", f"The .pak and .sig files that corresponds with the .pak file\n{pak_file_path}\nexist in both the enabled and disabled song folders.\nPlease resolve this manually by deleting one or the other.\nSkipping this .pak file for now.")
+                continue
+            elif (possible_pak_enabled_path == None and possible_sig_enabled_path == None and possible_pak_disabled_path == None and possible_sig_disabled_path == None):
+                # If the files don't already exist, set destination to base folder enabled directory
+                dest_pak = prog_properties.enabled_directory + "\\" + os.path.basename(pak_file_path)
+                dest_sig = prog_properties.enabled_directory + "\\" + os.path.basename(sig_file_path)
+            elif (possible_pak_enabled_path != None and possible_sig_enabled_path != None):
+                # if the song exists in the enabled path, copy over it
+                dest_pak = possible_pak_enabled_path + "\\" + os.path.basename(pak_file_path)
+                dest_sig = possible_sig_enabled_path + "\\" + os.path.basename(sig_file_path)
+            elif (possible_pak_disabled_path != None and possible_sig_disabled_path != None):
+                # if the song exists in the disabled path, copy over it
+                dest_pak = possible_pak_disabled_path + "\\" + os.path.basename(pak_file_path)
+                dest_sig = possible_sig_disabled_path + "\\" + os.path.basename(sig_file_path)
+
+            try:
+                shutil.copyfile(pak_file_path, dest_pak)
+                shutil.copyfile(sig_file_path, dest_sig)
+            except shutil.SameFileError:
+                messagebox.showwarning("Error", f"The .pak file\n{pak_file_path}\nalready exists in the enabled/disabled song folder.\nSkipping this .pak file for now.")
+                continue
         else:
             # call song extract, pointing towards file and enabled_directory
-            extract_song(filenames[i], prog_properties.enabled_directory)
+            extract_song(filenames[i], prog_properties.enabled_directory, prog_properties.enabled_directory, prog_properties.disabled_directory, prog_properties.pak_directory)
             #pass
     # now the files should exist in the enabled directory
     # add it to the visual tree and the actual database
     # call init on db to add new songs automatically
-    time.sleep(1)
+    # small delay to ensure all files are fully copied
+    time.sleep(0.1)
     connection = init_database(prog_properties.database_location, prog_properties.enabled_directory, prog_properties.disabled_directory, True)
-    time.sleep(1)
+    time.sleep(0.1)
     print("finished init database")
 
     # clear treeview and read all items from db
@@ -618,9 +646,9 @@ def add_song(treeview, prog_properties):
     # implement delay so that database catches up
     #time.sleep(1)
     # refill treeview items
-    db_songs = execute_db_read_query(connection, "SELECT * from songs")
+    db_songs = execute_db_read_query(connection, "SELECT * from songs ORDER BY filename")
     for i in range(len(db_songs)):
-        print(db_songs[i][0])
+        #print(db_songs[i][0])
         #print(db_songs[i])
         
         #star_string = "★" * db_songs[i][9] 
@@ -691,7 +719,7 @@ def clear_search(clear_button):
     for item in songs_table_tree.get_children():
         songs_table_tree.delete(item)
     # repopulate tree view with results from query "SELECT * from songs"
-    db_songs = execute_db_read_query(db_connection, "SELECT * from songs")
+    db_songs = execute_db_read_query(db_connection, "SELECT * from songs ORDER BY filename")
     for i in range(len(db_songs)):
             print(db_songs[i][0])
             #print(db_songs[i])
@@ -958,7 +986,7 @@ def update_row_in_db(song_info):
     new_author = song_info[11].replace("'", "''")
     execute_db_query(db_connection, f"UPDATE songs SET enabled = {enabled_state}, rating = {rating}, notes = '{new_notes}', author = '{new_author}' WHERE filename = '{song_shortname}'")
     read = execute_db_read_query(db_connection, f"SELECT * from songs WHERE filename = '{song_shortname}'")
-    print(read)
+    #print(read)
 
 # Called when editing a song from right click menu
 def edit_song():
@@ -1124,7 +1152,7 @@ add_song_button.configure(command=lambda: add_song(songs_table_tree, prog_proper
 
 # init song tree contents
 db_connection = init_database(prog_properties.database_location, prog_properties.enabled_directory, prog_properties.disabled_directory, False)
-db_songs = execute_db_read_query(db_connection, "SELECT * from songs")
+db_songs = execute_db_read_query(db_connection, "SELECT * from songs ORDER BY filename")
 for i in range(len(db_songs)):
     #print(db_songs[i])
     #star_string = "★" * db_songs[i][9]

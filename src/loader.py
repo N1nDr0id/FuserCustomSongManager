@@ -264,10 +264,12 @@ def get_metadata(output_bin_name, reg_data, uexp_data, should_save_output, debug
     return uexp_data
 
 # Searches the given directory recursively (including looking through subdirectories) and finds the directory for the first instance of a given file
-def get_folder_path_to_file(base_file_name, directory_to_search):
+def get_folder_path_to_file(file_name, directory_to_search):
+    base_file_name = os.path.basename(file_name) # just to ensure filename is actually base file name
+    extension = pathlib.Path(base_file_name).suffix
     #print("searching for, in:")
     #print(base_file_name, directory_to_search)
-    path = directory_to_search + "\\**\\*.pak"
+    path = directory_to_search + f"\\**\\*{extension}"
     for file in glob.glob(path, recursive=True):
         if os.path.basename(file) == base_file_name:
             #print("Path:", os.path.dirname(file))
