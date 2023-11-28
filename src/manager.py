@@ -511,8 +511,42 @@ window.grid_rowconfigure(1, weight=1)
 window.grid_columnconfigure(0, weight=1)
 
 # Top row button functionality
+
+# Refresh song list on demand
+def refresh_list(clear_button):
+    # Delete song cache if it exists
+    if os.path.exists(prog_properties.pak_directory + "\\customSongsUnlocked_P.pak"):
+        os.remove(prog_properties.pak_directory + "\\customSongsUnlocked_P.pak")
+    if os.path.exists(prog_properties.pak_directory + "\\customSongsUnlocked_P.sig"):
+        os.remove(prog_properties.pak_directory + "\\customSongsUnlocked_P.sig")
+
+    # Clear out treeview
+    for item in songs_table_tree.get_children():
+        songs_table_tree.delete(item)
+
+    # disable search button
+    clear_button.configure(state='disabled')
+
+    # use function to get new songs from unlocked and disabled song paths
+    db_connection = init_database(prog_properties.database_location, prog_properties.enabled_directory, prog_properties.disabled_directory, False)
+    db_songs = execute_db_read_query(db_connection, "SELECT * from songs")
+
+    # fill out tree view
+    for i in range(len(db_songs)):
+        star_string = rating_to_star_text(db_songs[i][9])
+        enabled_string = "☑" if (db_songs[i][8] == 1) else "☐"
+        db_songs[i] = (db_songs[i][0], db_songs[i][1], db_songs[i][2], db_songs[i][3], Genres(db_songs[i][4]).name, SongKey(db_songs[i][5]).name, SongMode(db_songs[i][6]).name, db_songs[i][7], enabled_string, star_string, db_songs[i][10], db_songs[i][11])
+        songs_table_tree.insert(parent="", index='end', iid=i, text="", values=db_songs[i])
+    
+
+# Launches the game and deletes custom song cache if it exists
 def launch_fuser():
-    #print(vars(prog_properties))
+    # delete custom songs cache if it exists
+    if os.path.exists(prog_properties.pak_directory + "\\customSongsUnlocked_P.pak"):
+        os.remove(prog_properties.pak_directory + "\\customSongsUnlocked_P.pak")
+    if os.path.exists(prog_properties.pak_directory + "\\customSongsUnlocked_P.sig"):
+        os.remove(prog_properties.pak_directory + "\\customSongsUnlocked_P.sig")
+
     if (prog_properties.launcher_type == LauncherType.Steam):
         subprocess.run("cmd /c start steam://run/1331440", startupinfo=startupinfo_hideconsole)
     elif (prog_properties.launcher_type == LauncherType.Epic):
@@ -712,6 +746,7 @@ top_bar = ttk.Frame()
 add_song_icon = tk.PhotoImage(file="gui_icons/folder.png").subsample(8, 8)
 search_icon = tk.PhotoImage(file="gui_icons/search.png").subsample(8, 8)
 clear_icon = tk.PhotoImage(file="gui_icons/close.png").subsample(8, 8)
+refresh_icon = tk.PhotoImage(file="gui_icons/arrow-repeat.png").subsample(8, 8)
 config_icon = tk.PhotoImage(file="gui_icons/settings.png").subsample(8, 8)
 fuser_icon = tk.PhotoImage(file="gui_icons/fuser black.png").subsample(4, 4)
 about_icon = tk.PhotoImage(file="gui_icons/information.png").subsample(8, 8)
@@ -722,6 +757,8 @@ clear_button.configure(command=lambda: clear_search(clear_button))
 clear_button.image = clear_icon
 search_button = ttk.Button(text="Search", master=top_bar, image=search_icon, compound='left', command=lambda: start_search(clear_button))
 search_button.image = search_icon
+refresh_button = ttk.Button(text="Refresh Song List", master=top_bar, image=refresh_icon, compound='left', command=lambda: refresh_list(clear_button))
+refresh_button.image = refresh_icon
 launch_button = ttk.Button(text="Launch Fuser", master=top_bar, image=fuser_icon, compound='left', command=launch_fuser)
 launch_button.image = fuser_icon
 config_button = ttk.Button(text="Configuration", master=top_bar, image=config_icon, compound='left', command=config_window)
@@ -731,9 +768,10 @@ about_button.image = about_icon
 add_song_button.grid(row=0, column=0)
 search_button.grid(row=0, column=1)
 clear_button.grid(row=0, column=2)
-launch_button.grid(row=0, column=3)
-config_button.grid(row=0, column=4)
-about_button.grid(row=0, column=5)
+refresh_button.grid(row=0, column=3)
+launch_button.grid(row=0, column=4)
+config_button.grid(row=0, column=5)
+about_button.grid(row=0, column=6)
 top_bar.grid(row=0, column=0, sticky=tk.W)
 
 main_frame = ttk.Frame()

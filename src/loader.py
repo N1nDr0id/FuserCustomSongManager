@@ -433,14 +433,17 @@ def create_db_from_files(pak_directory, db_connection, is_disabled_directory, di
         sig_file = pak_files[i][:-3] + "sig"
         #print("SIG FILE TO LOOK FOR: ", sig_file)
         if not os.path.exists(sig_file):
-            print("The file \n" + pak_files[i] + ".pak\nis missing the requisite .sig file\n" + sig_file + ".\nEnsure this .sig file exists and run program again to allow for song to be enabled.\nThis song has been disabled for now.")
+            print("The file \n" + pak_files[i] + "\nis missing the requisite .sig file\n" + sig_file + ".\nEnsure this .sig file exists and run program again to allow for song to be enabled.\nThis song has been disabled for now.")
             #is_disabled_directory = True
+            song_subfolders = os.path.dirname(pak_files[i])[len(disabled_directory_path) + 1:]
             if (not is_disabled_directory):
-                shutil.move(pak_files[i], disabled_directory_path + "\\" + os.path.basename(pak_files[i]))
-            song = get_song_info(disabled_directory_path + "\\" + os.path.basename(pak_files[i]), False, False)
+                song_subfolders = os.path.dirname(pak_files[i])[len(pak_directory) + 1:]
+                dest_path = disabled_directory_path + "\\" + song_subfolders
+                pathlib.Path(dest_path).mkdir(parents=True, exist_ok=True)
+                shutil.move(pak_files[i], dest_path + "\\" + os.path.basename(pak_files[i]))
+            song = get_song_info(disabled_directory_path + "\\" + song_subfolders + "\\" + os.path.basename(pak_files[i]), False, False)
             insert_song_into_db(db_connection, song)
             continue
-            # TODO: ensure folder structure is preserved when moving from enabled to disabled directory here. copy code from other area to do this!
             #continue
         song = get_song_info(pak_files[i], not is_disabled_directory, False)
         #song.print()
@@ -600,9 +603,8 @@ def init_database(database_location, pak_directory, disabled_directory, force_up
                 insert_song_into_db(connection, song)
             else:
                 song_object = get_song_info(file_path + "\\" + song_item + ".pak", False, False)
-                #song_object.is_enabled = False
-                #song_object.print()
                 insert_song_into_db(connection, song_object)
+                
             db_song_list.append(song_item)
 
         # songs that exist locally and are in database after previous steps
