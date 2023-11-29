@@ -10,7 +10,11 @@ To run this program, downloaded the latest release from the Releases section, th
 You can also choose to download the latest executable within the dist folder. NOTE: this version is typically in development and may not be ready for use.
 
 ### Building
-To build the application, you need PyInstaller downloaded. Then:
+To build the application, you need PyInstaller downloaded.
+
+Then, if you don't already have it, you'll need to follow the steps in [this thread](https://github.com/pyinstaller/pyinstaller/issues/3013#issuecomment-363916070) to get PyInstaller to recognize what's required for patoolib (the library used for extracting archive files when adding songs).
+
+Then:
 
 ```shell
 pyinstaller "src/manager.py" --onefile --windowed --icon=src/gui_icons/program_icon.ico --name="Fuser Custom Song Manager"

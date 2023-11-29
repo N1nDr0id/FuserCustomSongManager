@@ -18,7 +18,7 @@ from configparser import ConfigParser
 import webbrowser
 
 # FUSER CUSTOM SONG MANAGER, by Lilly :)
-version_number = "v0.9"
+version_number = "v0.9.1"
 
 fuser_process_name = "Fuser-Win64-Shipping.exe"
 
