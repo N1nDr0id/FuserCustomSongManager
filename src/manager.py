@@ -18,7 +18,7 @@ from configparser import ConfigParser
 import webbrowser
 
 # FUSER CUSTOM SONG MANAGER, by Lilly :)
-
+version_number = "v0.9"
 
 fuser_process_name = "Fuser-Win64-Shipping.exe"
 
@@ -736,8 +736,6 @@ def clear_search(clear_button):
     clear_button.configure(state='disabled')
 
 def show_about():
-    version_number = "v0.8.1"
-
     popup = tk.Toplevel()
     popup.focus_force()
     popup.grab_set()
