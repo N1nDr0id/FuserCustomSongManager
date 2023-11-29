@@ -51,7 +51,7 @@ def get_metadata_for_patched_song(songname):
             break
     print(item)
     #print(data)
-    return_song = Song(songname + "_P", song_data['song_name'], song_data['song_artist'], song_data['song_year'], Genres[song_data['song_genre']], SongKey[song_data['song_key']], SongMode[song_data['song_mode']], song_data['song_bpm'], True, 3, "Patched DLC song", "Harmonix")
+    return_song = Song(songname + "_P", song_data['song_name'], song_data['song_artist'], song_data['song_year'], Genres[song_data['song_genre']], SongKey[song_data['song_key']], SongMode[song_data['song_mode']], song_data['song_bpm'], True, 5, "Patched DLC song", "Harmonix")
     return return_song
 
 
