@@ -4,6 +4,10 @@ An all-in-one custom song manager for Fuser.
 ### Note
 PLEASE NOTE: No warranty is provided with use of this program. Please ensure that all of your songs are backed up elsewhere if you already have an existing custom song collection.
 
+This program is intended for Windows only. Behavior may not be consistent on macOS or Linux.
+
+Windows may prevent you from running this app due to it being rather new. You may have to allow the program through Windows Defender or choose to run the program if SmartScreen prevents it.
+
 ### Instructions
 To run this program, downloaded the latest release from the Releases section, then unzip into a folder and run "Fuser Custom Song Manager.exe".
 
