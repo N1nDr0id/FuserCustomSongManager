@@ -1,6 +1,6 @@
 <h1 align="center">Fuser Custom Song Manager</h1>
 <p align="center">
-<img src="https://github.com/N1nDr0id/FuserCustomSongManager/blob/main/src/gui_icons/program_icon.png?raw=true" alt="Fuser CUstom Song Manager Icon">
+<img src="https://github.com/N1nDr0id/FuserCustomSongManager/blob/main/docs/logo.jpg?raw=true" alt="Fuser CUstom Song Manager Icon">
 </p>
 <p align="center">
 <i>An all-in-one custom song manager for Fuser.</i>
@@ -48,3 +48,6 @@ For the console version of this program, run:
 ```shell
 pyinstaller "src/manager.py" --onefile --icon=src/gui_icons/program_icon.ico --name="Fuser Custom Song Manager Console"
 ```
+
+<hr>
+<p align="center"><i>Made with love for the Fuser community.</i> ❤️</p>
