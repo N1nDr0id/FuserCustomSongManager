@@ -23,6 +23,8 @@ This program is intended for Windows only. Behavior may not be consistent on mac
 
 Windows may prevent you from running this app due to it being rather new. You may have to allow the program through Windows Defender or choose to run the program if SmartScreen prevents it.
 
+Given the small size of the team working on this project, bug fixes and future updates may be somewhat slow. Please have patience as this program evolves over time! Thank you for understanding.
+
 ### Instructions
 To run this program, downloaded the latest release from the Releases section, then unzip into a folder and run "Fuser Custom Song Manager.exe".
 
