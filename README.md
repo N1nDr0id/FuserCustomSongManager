@@ -23,6 +23,8 @@ This program is intended for Windows only. Behavior may not be consistent on mac
 
 Windows may prevent you from running this app due to it being rather new. You may have to allow the program through Windows Defender or choose to run the program if SmartScreen prevents it.
 
+Currently, launching a copy of the game purchased through the Epic Games Store before it was delisted is not currently supported from within the program.
+
 Given the small size of the team working on this project, bug fixes and future updates may be somewhat slow. Please have patience as this program evolves over time! Thank you for understanding.
 
 ### Instructions
@@ -31,6 +33,8 @@ To run this program, downloaded the latest release from the Releases section, th
 Also provided within this folder is "Fuser Custom Song Manager Console.exe". This version of the program displays a console alongside the app, which may help with determining issues should you run into any.
 
 You can also choose to download the latest executable within the dist folder. NOTE: this version is typically in development and may not be ready for use.
+
+As a small note, config files and the song database for this program are placed in %localappdata%/FuserCustomSongManager.
 
 ### Building
 To build the application, you need PyInstaller downloaded.
