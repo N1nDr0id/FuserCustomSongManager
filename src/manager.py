@@ -54,7 +54,7 @@ def process_exists(process_name):
     return last_line.lower().startswith(process_name.lower())
 
 def process_exists_2(process_name):
-    progs = str(subprocess.check_output('tasklist'))
+    progs = str(subprocess.check_output('tasklist', startupinfo=startupinfo_hideconsole))
     if process_name in progs:
         return True
     else:
@@ -925,20 +925,21 @@ def do_treeview_rmb_popup(e):
         pass
 
 # Responsible for updating row visually and moving files as needed
-def update_row(iid, song_info, updated_info):
+def update_row(iid, song_info, updated_info, check_if_fuser_running):
     new_song_info = list(song_info)
     new_song_info[8] = bool_to_checkbox_text(updated_info[0])
     new_song_info[9] = updated_info[1]
     new_song_info[10] = updated_info[2]
     new_song_info[11] = updated_info[3]
 
-    if (process_exists_2(fuser_process_name) and checkbox_to_bool(song_info[8]) != checkbox_to_bool(new_song_info[8])):
-        # if the user wants to enable the song
-        if (checkbox_to_bool(new_song_info[8])):
-            messagebox.showerror("Fuser currently running", "Fuser is currently running. This song will not be enabled at this time.\nPlease quit the game to enable this song.")
-        else: # If the user wants to disable the song
-            messagebox.showerror("Fuser currently running", "Fuser is currently running. This song will not be disabled at this time.\nPlease quit the game to disable this song.")
-        new_song_info[8] = song_info[8]
+    if (check_if_fuser_running):
+        if (process_exists_2(fuser_process_name) and checkbox_to_bool(song_info[8]) != checkbox_to_bool(new_song_info[8])):
+            # if the user wants to enable the song
+            if (checkbox_to_bool(new_song_info[8])):
+                messagebox.showerror("Fuser currently running", "Fuser is currently running. This song will not be enabled at this time.\nPlease quit the game to enable this song.")
+            else: # If the user wants to disable the song
+                messagebox.showerror("Fuser currently running", "Fuser is currently running. This song will not be disabled at this time.\nPlease quit the game to disable this song.")
+            new_song_info[8] = song_info[8]
 
     # function to find song in file path given start folder and filename here
     actual_file_folder_path = None
@@ -1056,7 +1057,7 @@ def edit_song():
         return
     updated_info = d.result
     # update row info
-    update_row(selected_song_iid, song_info, updated_info)
+    update_row(selected_song_iid, song_info, updated_info, check_if_fuser_running=True)
 
 def edit_multiple_songs():
     selected_song_iids = songs_table_tree.selection()
@@ -1072,12 +1073,14 @@ def edit_multiple_songs():
     #print(d.result)
     updated_info = d.result
     messagebox.showinfo("Edit multiple songs", "The program may appear frozen while the data for each song is being saved. Please wait a moment.")
+    # check if fuser is running before doing this loop!
+
     for selected_song_iid in selected_song_iids:
         song_info = songs_table_tree.item(selected_song_iid, 'values')
         print(song_info)
         # self.result = (new_enabled_state, new_rating, new_notes, new_author)
         # update row info
-        update_row(selected_song_iid, song_info, updated_info)
+        update_row(selected_song_iid, song_info, updated_info, check_if_fuser_running=False)
 
 # Deletes a song from the database, the visual database, and from the filesystem
 def delete_song():
@@ -1172,7 +1175,7 @@ def do_treeview_doubleclick(e):
         if d.result == None:
             return
         updated_info = d.result
-        update_row(item_iid, song_info, updated_info)
+        update_row(item_iid, song_info, updated_info, check_if_fuser_running=True)
         # after returning from dialog, compare resulting values to previous values
         # if values have changed, write to table and database
     else:
@@ -1190,7 +1193,7 @@ def toggle_song():
     new_song_state = not song_is_enabled
     #new_tuple = list(selected_song)
     # now we update the row visually, in the file system, and in the database
-    update_row(selected_song_iid, selected_song, (new_song_state, selected_song[9], selected_song[10], selected_song[11]))
+    update_row(selected_song_iid, selected_song, (new_song_state, selected_song[9], selected_song[10], selected_song[11]), check_if_fuser_running=True)
     # now we need to update the database
     
     #execute_db_query(db_connection, f"UPDATE songs SET enabled = {1 if new_song_state == True else 0} WHERE filename = '{song_shortname}'")
