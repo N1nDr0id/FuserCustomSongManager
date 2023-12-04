@@ -16,9 +16,10 @@ import sys
 import re
 from configparser import ConfigParser
 import webbrowser
+from update_checker import check_for_update
 
 # FUSER CUSTOM SONG MANAGER, by Lilly :)
-version_number = "v1.0.1"
+version_number = "v1.1.0"
 
 fuser_process_name = "Fuser-Win64-Shipping.exe"
 
@@ -50,7 +51,14 @@ def process_exists(process_name):
     # check in last line for process name
     last_line = output.strip().split('\r\n')[-1]
     # because Fail message could be translated
-    return last_line.lower().startswith(process_name.lower()) 
+    return last_line.lower().startswith(process_name.lower())
+
+def process_exists_2(process_name):
+    progs = str(subprocess.check_output('tasklist'))
+    if process_name in progs:
+        return True
+    else:
+        return False
 
 # Song edit dialog window, which appears when editing a song's info (rating, enabled/disabled state, etc)
 class SongEditDialog(simpledialog.Dialog):
@@ -88,11 +96,11 @@ class SongEditDialog(simpledialog.Dialog):
         #print(self.song_info)
         #is_enabled_var.set() #☑☐
         self.is_enabled_checkbutton = ttk.Checkbutton(entry_section, text="Enabled?", variable=self.is_enabled_var)
-        if (process_exists(fuser_process_name)):
+        if (process_exists_2(fuser_process_name)):
             print("Process is currently running")
             self.is_enabled_checkbutton.configure(state=tk.DISABLED)
         else:
-            print("Process it not running")
+            print("Process is not running")
         #is_enabled_checkbutton.select()
 
         self.is_enabled_checkbutton.grid(row=0, column=0, pady=height_padding)
@@ -559,7 +567,7 @@ def launch_fuser():
 def add_song(treeview, prog_properties):
 
     # Preemptive check to see if game is running before allowing songs to be selected
-    if (process_exists(fuser_process_name)):
+    if (process_exists_2(fuser_process_name)):
         messagebox.showerror("Fuser currently running", "Fuser is currently running. Please quit the game to add new songs.")
         return
 
@@ -576,7 +584,7 @@ def add_song(treeview, prog_properties):
         return
     
     # check again in case game was launched after selecting files
-    if (process_exists(fuser_process_name)):
+    if (process_exists_2(fuser_process_name)):
         messagebox.showerror("Fuser currently running", "Fuser is currently running. Please quit the game to add new songs.")
         return
 
@@ -662,6 +670,27 @@ def add_song(treeview, prog_properties):
         treeview.insert(parent="", index='end', iid=i, text="", values=db_songs[i])
 
     connection.close()
+
+def edit_songs_button_handler():
+    selected_items = songs_table_tree.selection()
+    if (len(selected_items) == 0):
+        return
+    if (len(selected_items) == 1):
+        edit_song()
+    else:
+        # special multi-select window
+        edit_multiple_songs()
+        pass
+    # if no songs are selected, do nothing
+    # if only one song is selected, show regular popup
+    # if multiple songs are selected, show a special popup that just says "multiple songs selected" and have textboxes for author, notes, and a ratings dropdown
+    # overwrite contents in database when updating all songs
+
+def delete_songs_button_handler():
+    # if no songs are selected, do nothing
+    selected_items = songs_table_tree.selection()
+    # else (if one or multiple are selected), call the regular delete function for each file that's selected. not sure if this will work
+    pass
         
 def write_config():
     config.set('main', 'fuser_path', prog_properties.fuser_directory)
@@ -735,6 +764,15 @@ def clear_search(clear_button):
     # disable clear button
     clear_button.configure(state='disabled')
 
+def manager_update_check():
+    new_version_string = check_for_update(version_number)
+    print(new_version_string)
+    if new_version_string != None:
+        update_text = f"A new version of the Fuser Custom Song Manager, {new_version_string}, is available! Would you like to view the latest release?"
+        result = messagebox.askquestion("Update available!", update_text)
+        if (result == 'yes'):
+            webbrowser.open_new_tab("https://github.com/N1nDr0id/FuserCustomSongManager/releases/latest")
+
 def show_about():
     popup = tk.Toplevel()
     popup.focus_force()
@@ -757,10 +795,12 @@ as well as thanks to those who tested the program."""
     canvas.create_image(0, 0, anchor=tk.NW, image=popup.logo)
     ttk.Label(popup, text=about_text, justify=tk.CENTER).pack(padx=20, pady=10)
     buttons_frame = tk.Frame(popup)
-    button1 = ttk.Button(buttons_frame, text="View on GitHub", command=lambda: webbrowser.open_new_tab("https://github.com/N1nDr0id/FuserCustomSongManager"))
-    button2 = ttk.Button(buttons_frame, text="Latest release", command=lambda: webbrowser.open_new_tab("https://github.com/N1nDr0id/FuserCustomSongManager/releases/latest"))
+    button1 = ttk.Button(buttons_frame, text="Check for updates", command=manager_update_check)
+    button2 = ttk.Button(buttons_frame, text="View on GitHub", command=lambda: webbrowser.open_new_tab("https://github.com/N1nDr0id/FuserCustomSongManager"))
+    button3 = ttk.Button(buttons_frame, text="Latest release", command=lambda: webbrowser.open_new_tab("https://github.com/N1nDr0id/FuserCustomSongManager/releases/latest"))
     button1.grid(row=0, column=0)
     button2.grid(row=0, column=1)
+    button3.grid(row=0, column=2)
     buttons_frame.pack(padx=20, pady=10)
 
 s = ttk.Style()
@@ -770,34 +810,52 @@ s.configure('Centered.TButton', anchor=tk.CENTER)
 # Set up top bar
 top_bar = ttk.Frame()
 add_song_icon = tk.PhotoImage(file="gui_icons/folder.png").subsample(8, 8)
+edit_song_icon = tk.PhotoImage(file="gui_icons/edit.png").subsample(8, 8)
+delete_song_icon = tk.PhotoImage(file="gui_icons/delete.png").subsample(8, 8)
 search_icon = tk.PhotoImage(file="gui_icons/search.png").subsample(8, 8)
 clear_icon = tk.PhotoImage(file="gui_icons/close.png").subsample(8, 8)
 refresh_icon = tk.PhotoImage(file="gui_icons/arrow-repeat.png").subsample(8, 8)
 config_icon = tk.PhotoImage(file="gui_icons/settings.png").subsample(8, 8)
 fuser_icon = tk.PhotoImage(file="gui_icons/fuser black.png").subsample(4, 4)
 about_icon = tk.PhotoImage(file="gui_icons/information.png").subsample(8, 8)
+
 add_song_button = ttk.Button(text="Add Song(s)", master=top_bar, image=add_song_icon, compound='left')
 add_song_button.image = add_song_icon
+
+edit_song_button = ttk.Button(text="Edit Song(s)", master=top_bar, image=edit_song_icon, compound='left', command=edit_songs_button_handler)
+edit_song_button.image = edit_song_icon
+
+delete_song_button = ttk.Button(text="Delete Song(s)", master=top_bar, image=delete_song_icon, compound='left')
+delete_song_button.image = delete_song_icon
+
 clear_button = ttk.Button(text="Clear Search", master=top_bar, image=clear_icon, compound='left', state='disabled')
 clear_button.configure(command=lambda: clear_search(clear_button))
 clear_button.image = clear_icon
+
 search_button = ttk.Button(text="Search", master=top_bar, image=search_icon, compound='left', command=lambda: start_search(clear_button))
 search_button.image = search_icon
+
 refresh_button = ttk.Button(text="Refresh Song List", master=top_bar, image=refresh_icon, compound='left', command=lambda: refresh_list(clear_button))
 refresh_button.image = refresh_icon
+
 launch_button = ttk.Button(text="Launch Fuser", master=top_bar, image=fuser_icon, compound='left', command=launch_fuser)
 launch_button.image = fuser_icon
+
 config_button = ttk.Button(text="Configuration", master=top_bar, image=config_icon, compound='left', command=config_window)
 config_button.image = config_icon
+
 about_button = ttk.Button(text="About", master=top_bar, image=about_icon, compound='left', command=show_about)
 about_button.image = about_icon
+
 add_song_button.grid(row=0, column=0)
-search_button.grid(row=0, column=1)
-clear_button.grid(row=0, column=2)
-refresh_button.grid(row=0, column=3)
-launch_button.grid(row=0, column=4)
-config_button.grid(row=0, column=5)
-about_button.grid(row=0, column=6)
+edit_song_button.grid(row=0, column=1)
+delete_song_button.grid(row=0, column=2)
+search_button.grid(row=0, column=3)
+clear_button.grid(row=0, column=4)
+refresh_button.grid(row=0, column=5)
+launch_button.grid(row=0, column=6)
+config_button.grid(row=0, column=7)
+about_button.grid(row=0, column=8)
 top_bar.grid(row=0, column=0, sticky=tk.W)
 
 main_frame = ttk.Frame()
@@ -856,7 +914,7 @@ def do_treeview_rmb_popup(e):
         songs_table_tree.selection_set(item)
         songs_table_tree.focus_set()
         songs_table_tree.focus(item)
-        if (process_exists(fuser_process_name)):
+        if (process_exists_2(fuser_process_name)):
             table_rmb_menu.entryconfig(1, state=tk.DISABLED)
             table_rmb_menu.entryconfig(2, state=tk.DISABLED)
         else:
@@ -874,7 +932,7 @@ def update_row(iid, song_info, updated_info):
     new_song_info[10] = updated_info[2]
     new_song_info[11] = updated_info[3]
 
-    if (process_exists(fuser_process_name) and checkbox_to_bool(song_info[8]) != checkbox_to_bool(new_song_info[8])):
+    if (process_exists_2(fuser_process_name) and checkbox_to_bool(song_info[8]) != checkbox_to_bool(new_song_info[8])):
         # if the user wants to enable the song
         if (checkbox_to_bool(new_song_info[8])):
             messagebox.showerror("Fuser currently running", "Fuser is currently running. This song will not be enabled at this time.\nPlease quit the game to enable this song.")
@@ -1000,6 +1058,27 @@ def edit_song():
     # update row info
     update_row(selected_song_iid, song_info, updated_info)
 
+def edit_multiple_songs():
+    selected_song_iids = songs_table_tree.selection()
+    new_enabled_state = None
+    new_rating = None
+    new_author = None
+    new_notes = None
+    # show popup that gets items as listed above ^
+    song_info = ('Multiple Files', 'Multiple Songs', 'Multiple Artists', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', '☑', '☆☆☆☆☆', '', '')
+    d = SongEditDialog(window, song_info)
+    if d.result == None:
+        return
+    #print(d.result)
+    updated_info = d.result
+    messagebox.showinfo("Edit multiple songs", "The program may appear frozen while the data for each song is being saved. Please wait a moment.")
+    for selected_song_iid in selected_song_iids:
+        song_info = songs_table_tree.item(selected_song_iid, 'values')
+        print(song_info)
+        # self.result = (new_enabled_state, new_rating, new_notes, new_author)
+        # update row info
+        update_row(selected_song_iid, song_info, updated_info)
+
 # Deletes a song from the database, the visual database, and from the filesystem
 def delete_song():
 
@@ -1010,14 +1089,22 @@ def delete_song():
 
     # If they say yes, then continue with deleting song.
     # Otherwise, do NOT delete the song and just quit from this function
-    if (process_exists(fuser_process_name)):
+    selected_song_iids = songs_table_tree.selection()
+    if (len(selected_song_iids) == 0):
+        return
+    
+    if (process_exists_2(fuser_process_name)):
         messagebox.showerror("Fuser currently running", "Fuser is currently running. This song will not be deleted at this time.\nPlease quit the game to delete this song.")
         return
+    
+    warning_message_shown = False
+    warn_result = 'no'
 
-    selected_song_iid = songs_table_tree.focus()
-    song_info = songs_table_tree.item(selected_song_iid, 'values')
-    is_enabled = checkbox_to_bool(song_info[8])
-    warning_msg = f"""WARNING: You are about to delete this song:
+    for selected_song_iid in selected_song_iids:
+        song_info = songs_table_tree.item(selected_song_iid, 'values')
+        is_enabled = checkbox_to_bool(song_info[8])
+        if (len(selected_song_iids) == 1):
+            warning_msg = f"""WARNING: You are about to delete this song:
 
 Filename: {song_info[0]}
 {song_info[1]}
@@ -1029,37 +1116,48 @@ This includes both your custom_songs folder and the local database.
 
 Press YES to delete this song, or NO to cancel this action.
 """
-    warn_result = messagebox.askquestion("Delete Song", warning_msg, icon='warning')
-    print(warn_result)
-    if (warn_result == 'yes'):
-        # delete that damn file !!
-        file_folder_path = None
-        if checkbox_to_bool(song_info[8]):
-            file_folder_path = get_folder_path_to_file(song_info[0] + ".pak", prog_properties.enabled_directory)
         else:
-            file_folder_path = get_folder_path_to_file(song_info[0] + ".pak", prog_properties.disabled_directory)
+            warning_msg = f"""WARNING: You are about to delete multiple songs.
 
-        if checkbox_to_bool(song_info[8]):
-            if os.path.exists(file_folder_path + f"\\{song_info[0]}.pak"):
-                os.remove(file_folder_path + f"\\{song_info[0]}.pak")
-            if os.path.exists(file_folder_path + f"\\{song_info[0]}.sig"):
-                os.remove(file_folder_path + f"\\{song_info[0]}.sig")
-        else:
-            if os.path.exists(file_folder_path + f"\\{song_info[0]}.pak"):
-                os.remove(file_folder_path + f"\\{song_info[0]}.pak")
-            if os.path.exists(file_folder_path + f"\\{song_info[0]}.sig"):
-                os.remove(file_folder_path + f"\\{song_info[0]}.sig")
+Are you SURE you want to delete these songs? 
+Doing so will remove ALL data for these songs from your current game installation.
+This includes both your custom_songs folder and the local database.
 
-        # after ensuring the .pak and .sig files are deleted, also ensure to delete the customSongsUnlocked_P.pak and .sig files
-        if os.path.exists(prog_properties.pak_directory + "\\customSongsUnlocked_P.pak"):
-            os.remove(prog_properties.pak_directory + "\\customSongsUnlocked_P.pak")
-        if os.path.exists(prog_properties.pak_directory + "\\customSongsUnlocked_P.sig"):
-            os.remove(prog_properties.pak_directory + "\\customSongsUnlocked_P.sig")
-        #print("DELETING FILE HERE")
-        
-        # after that, delete row from both visual table and from actual database
-        execute_db_query(db_connection, f"DELETE FROM songs WHERE filename = '{song_info[0]}'")
-        songs_table_tree.delete(selected_song_iid)
+Press YES to delete these songs, or NO to cancel this action.
+"""
+        if warning_message_shown == False:
+            warn_result = messagebox.askquestion("Delete Song", warning_msg, icon='warning')
+            print(warn_result)
+            warning_message_shown = True
+        if (warn_result == 'yes'):
+            # delete that damn file !!
+            file_folder_path = None
+            if checkbox_to_bool(song_info[8]):
+                file_folder_path = get_folder_path_to_file(song_info[0] + ".pak", prog_properties.enabled_directory)
+            else:
+                file_folder_path = get_folder_path_to_file(song_info[0] + ".pak", prog_properties.disabled_directory)
+
+            if checkbox_to_bool(song_info[8]):
+                if os.path.exists(file_folder_path + f"\\{song_info[0]}.pak"):
+                    os.remove(file_folder_path + f"\\{song_info[0]}.pak")
+                if os.path.exists(file_folder_path + f"\\{song_info[0]}.sig"):
+                    os.remove(file_folder_path + f"\\{song_info[0]}.sig")
+            else:
+                if os.path.exists(file_folder_path + f"\\{song_info[0]}.pak"):
+                    os.remove(file_folder_path + f"\\{song_info[0]}.pak")
+                if os.path.exists(file_folder_path + f"\\{song_info[0]}.sig"):
+                    os.remove(file_folder_path + f"\\{song_info[0]}.sig")
+
+            # after ensuring the .pak and .sig files are deleted, also ensure to delete the customSongsUnlocked_P.pak and .sig files
+            if os.path.exists(prog_properties.pak_directory + "\\customSongsUnlocked_P.pak"):
+                os.remove(prog_properties.pak_directory + "\\customSongsUnlocked_P.pak")
+            if os.path.exists(prog_properties.pak_directory + "\\customSongsUnlocked_P.sig"):
+                os.remove(prog_properties.pak_directory + "\\customSongsUnlocked_P.sig")
+            #print("DELETING FILE HERE")
+            
+            # after that, delete row from both visual table and from actual database
+            execute_db_query(db_connection, f"DELETE FROM songs WHERE filename = '{song_info[0]}'")
+            songs_table_tree.delete(selected_song_iid)
 
 # Input handler for doubleclicking a song row in the table, edits said song
 def do_treeview_doubleclick(e):
@@ -1145,8 +1243,9 @@ else:
     tmp_exe_path = config.get('main', 'executable_path')
     prog_properties = ProgramProperties(tmp_fuser_path, tmp_db_path, tmp_install_type, tmp_exe_path)
 
-# last bit of setup for add song button
+# last bit of setup for top row buttons
 add_song_button.configure(command=lambda: add_song(songs_table_tree, prog_properties))
+delete_song_button.configure(command=delete_song)
 
 # init song tree contents
 db_connection = init_database(prog_properties.database_location, prog_properties.enabled_directory, prog_properties.disabled_directory, False)
@@ -1163,6 +1262,8 @@ for i in range(len(db_songs)):
     #db_songs[i][6] = SongMode(db_songs[i][6]).name
     #db_songs[i][8] = True if (db_songs[i][8] == 1) else False
     songs_table_tree.insert(parent="", index='end', iid=i, text="", values=db_songs[i])
+
+manager_update_check()
 
 # Run main loop of program!
 window.mainloop()

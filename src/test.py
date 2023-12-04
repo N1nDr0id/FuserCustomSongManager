@@ -3,6 +3,9 @@
 import os
 import glob
 import pathlib
+import psutil
+import subprocess
+import sys
 
 # NOTE: This script is part of the Fuser Custom Song Manager program. Its contents are here for reference and archival purposes.
 
@@ -23,6 +26,40 @@ def get_newest_subfolder_date(base_folder):
             sub_path_dates.append(pathlib.Path(root + "\\" + dir).stat().st_mtime)
 
     print(max(sub_path_dates))
+
+def process_exists_2(process_name):
+    process_list = {p.name() for p in psutil.process_iter(attrs=['name'])}
+    if process_name in process_list:
+        # do whatever you want
+        print("Process found!")
+
+def process_exists_3(process_name):
+    progs = str(subprocess.check_output('tasklist'))
+    if process_name in progs:
+        return True
+    else:
+        return False
+    
+def check_for_updates():
+    version_number = "v1.0.0"
+    
+
+startupinfo_hideconsole = subprocess.STARTUPINFO()
+startupinfo_hideconsole.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+
+def process_exists(process_name):
+    call = 'TASKLIST', '/FI', 'imagename eq %s' % process_name
+    # use buildin check_output right away
+    output = subprocess.check_output(call, startupinfo=startupinfo_hideconsole).decode(encoding=sys.stdout.encoding)
+    # check in last line for process name
+    last_line = output.strip().split('\r\n')[-1]
+    # because Fail message could be translated
+    return last_line.lower().startswith(process_name.lower()) 
+
+process_to_find = "chrome.exe"
+print(process_exists(process_to_find))
+process_exists_2(process_to_find)
+print(process_exists_3(process_to_find))
 
 #get_newest_subfolder_date("E:\\Steam\\SteamApps\\common\\Fuser\\Fuser\\Content\\Paks\\custom_songs")
 
