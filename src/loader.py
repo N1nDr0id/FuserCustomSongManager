@@ -12,7 +12,8 @@ import list_ops
 from patched_dlc_lists import get_metadata_for_patched_song
 import shutil
 
-# TODO: go through entire program and ensure that wherever we're using get_folder_path_to_file and moving a file from one folder to another (i.e. enabling or disabling a song), we also make sure to preserve the folder layout/path for said song.
+#global debug constant
+DEBUG = False
 
 # NOTE: This script is part of the Fuser Custom Song Manager program. Its contents are here for both reference and for use within that program.
 # Any attempts to run this script on its own may result in issues. Do not run this script on its own unless you know what you are doing.
@@ -66,7 +67,8 @@ patched_DLC_list = {'adoreyou', 'alittlerespect', 'alot',
 
 # Most of the wizardry going on in this function is credited to NarrikSynthfox. Thank you!!
 def get_metadata(output_bin_name, reg_data, uexp_data, should_save_output, debug_print):
-
+    if debug_print:
+        print("BEGIN get_metadata")
     indata=reg_data
     offset=0
 
@@ -261,6 +263,8 @@ def get_metadata(output_bin_name, reg_data, uexp_data, should_save_output, debug
         for thing in uexp_data:
             output.write(str(thing)+"\n")
         output.close()
+    if debug_print:
+        print("END get_metadata")
     return uexp_data
 
 # Searches the given directory recursively (including looking through subdirectories) and finds the directory for the first instance of a given file
@@ -269,7 +273,7 @@ def get_folder_path_to_file(file_name, directory_to_search):
     extension = pathlib.Path(base_file_name).suffix
     #print("searching for, in:")
     #print(base_file_name, directory_to_search)
-    path = directory_to_search + f"\\**\\*{extension}"
+    path = glob.escape(directory_to_search) + f"\\**\\*{extension}"
     for file in glob.glob(path, recursive=True):
         if os.path.basename(file) == base_file_name:
             #print("Path:", os.path.dirname(file))
@@ -280,41 +284,60 @@ def get_folder_path_to_file(file_name, directory_to_search):
 
 # Using get_metadata, we get the metadata for a given song file and return said data as a Song object.
 def get_song_info(file_location, is_enabled, debug_print):
+    if debug_print:
+        print("BEGIN get_song_info")
+        print("FILE TO GET DATA FROM:")
+        print(file_location)
     #short_name = pak_name[:-6]
     #file_location = pak_directory + "\\" + short_name + "_P.pak"
     short_name = os.path.basename(file_location)[:-6]
     if (debug_print):
+        print("SHORT NAME:")
         print(short_name)
-        print(file_location)
 
     # check if short_name is in list of patched DLC songs
     # if so, just get appropriate data from premade list and return that song data
     if short_name in patched_DLC_list:
+        if debug_print:
+            print("GETTING METADATA FOR PATCHED SONG")
         return get_metadata_for_patched_song(short_name)
 
     with open(file_location, "rb") as pak_file:
         try:
+            if debug_print:
+                print("GETTING DATA USING PYPAKPARSER")
             PP = PakParser(pak_file)
             #for item in PP.List():
                 #print(item)
             #asset = "DLC/Songs/whales_hail_mary_mallon/Meta_whales_hail_mary_mallon.uasset"
             reg_asset = f"DLC/Songs/{short_name}/Meta_{short_name}.uasset"
+            if debug_print:
+                print("UNPACKING ASSET " + reg_asset)
             reg_asset_data = PP.Unpack(reg_asset).Data
             reg_asset_uexp = f"DLC/Songs/{short_name}/Meta_{short_name}.uexp"
+            if debug_print:
+                print("UNPACKING UEXP ASSET " + reg_asset_uexp)
             reg_asset_uexp_data = PP.Unpack(reg_asset_uexp).Data
             if debug_print:
+                print("REG ASSET DATA:")
                 print(reg_asset_data)
                 print()
             bs_asset = f"Audio/Songs/{short_name}/{short_name}bs/Meta_{short_name}bs.uasset"
+            if debug_print:
+                print("UNPACKING BS ASSET " + bs_asset)
             bs_asset_data = PP.Unpack(bs_asset).Data
             bs_asset_uexp = f"Audio/Songs/{short_name}/{short_name}bs/Meta_{short_name}bs.uexp"
+            if debug_print:
+                print("UNPACKING BS UEXP ASSET " + bs_asset_uexp)
             bs_asset_uexp_data = PP.Unpack(bs_asset_uexp).Data
             if debug_print:
+                print("BS ASSET DATA:")
                 print(bs_asset_data)
 
             # start metadata.py
-            data_final = get_metadata(short_name, reg_asset_data, reg_asset_uexp_data, False, debug_print)
+            data_final = get_metadata(short_name, reg_asset_data, reg_asset_uexp_data, False, debug_print=debug_print)
             if debug_print:
+                print("DATA FINAL:")
                 for item in data_final:
                     print(item)
             #print("---REGULAR ASSET DONE---")
@@ -324,12 +347,13 @@ def get_song_info(file_location, is_enabled, debug_print):
             #print(type(song_genre))
             song_year = data_final[5][3] # year
             if debug_print:
+                print("SONG DATA:")
                 print(song_artist)
                 print(Genres[song_genre])
                 print(song_year)
                 print(len(data_final))
                 print("---REGULAR ASSET DONE---")
-            data_final_2 = get_metadata(f"{short_name}_2", bs_asset_data, bs_asset_uexp_data, False, debug_print)
+            data_final_2 = get_metadata(f"{short_name}_2", bs_asset_data, bs_asset_uexp_data, False, debug_print=debug_print)
             if debug_print:
                 print("---BS ASSET DONE---")
                 for item in data_final_2:
@@ -344,17 +368,26 @@ def get_song_info(file_location, is_enabled, debug_print):
             #print(f"Key: {song_key}, Mode: {song_mode}, BPM: {song_bpm}")
             #print()
             new_song = Song(short_name + "_P", song_title, song_artist, song_year, Genres[song_genre], SongKey[song_key], SongMode[song_mode], song_bpm, is_enabled, 0, "", "")
+            if debug_print:
+                print("RETURN SONG INFO:")
+                new_song.print()
+                print("END get_song_info")
             return new_song
             #print(song_title, SongKey[song_key], SongMode[song_mode], song_bpm)
         except AssertionError as e:
             print("ASSERT ERROR")
             print("is enabled?", is_enabled)
             new_song = Song(short_name + "_P", "Unknown", "Unknown", 0, Genres.Classical, SongKey.Num, SongMode.Num, 0, is_enabled, 0, "An assertion error occurred with this song. Please get in touch with the developer to resolve this issue.", "Unknown")
+            if debug_print:
+                print("RETURN SONG INFO:")
+                new_song.print()
+                print("END get_song_info")
             return new_song
 
 # Returns a list of unique .pak file names, sorted alphabetically(?)
 def get_pak_file_names(directory):
-    pak_list = glob.glob(f'{directory}\\**\\*.pak', recursive=True)
+    pak_list = glob.glob(f'{glob.escape(directory)}\\**\\*.pak', recursive=True)
+    print("Pak names:")
     for i in range(len(pak_list)):
         pak_list[i] = os.path.basename(pak_list[i])[:-4]
         print(pak_list[i])
@@ -396,6 +429,8 @@ def execute_db_read_query(connection, query):
 
 # Takes in a song object and inserts said song into the database with a db query
 def insert_song_into_db(connection, song):
+    if DEBUG:
+        print("BEGIN insert_song_into_db")
     # find and replace all single quotes in short_name, song_name, artist, and notes
     # replace single quotes with two single quotes
     new_song_db_query = f"""
@@ -416,14 +451,26 @@ def insert_song_into_db(connection, song):
     """
     #print(new_song_db_query)
     execute_db_query(connection, new_song_db_query)
+    if DEBUG:
+        print("END insert_song_into_db")
 
 # Loops through a given directory and inserts each song in said directory into the database
 def create_db_from_files(pak_directory, db_connection, is_disabled_directory, disabled_directory_path):
     #print("IN CREATE DB FROM FILES")
-    path = f'{pak_directory}\\**\\*.pak'
+    if DEBUG:
+        print("BEGIN create_db_from_files")
+        print("PAK directory to search through:")
+        print(pak_directory)
+        print("Disabled directory:")
+        print(disabled_directory_path)
+    path = f'{glob.escape(pak_directory)}\\**\\*.pak'
+    if DEBUG:
+        print("PATH TO SEARCH:")
+        print(path)
     #print(path)
     pak_list = glob.glob(path, recursive=True)
     pak_files = []
+    print("Pak files:")
     for item in pak_list:
         #pak_files.append(os.path.basename(item))
         pak_files.append(item)
@@ -443,20 +490,24 @@ def create_db_from_files(pak_directory, db_connection, is_disabled_directory, di
                 dest_path = disabled_directory_path + "\\" + song_subfolders
                 pathlib.Path(dest_path).mkdir(parents=True, exist_ok=True)
                 shutil.move(pak_files[i], dest_path + "\\" + os.path.basename(pak_files[i]))
-            song = get_song_info(disabled_directory_path + "\\" + song_subfolders + "\\" + os.path.basename(pak_files[i]), False, False)
+            song = get_song_info(disabled_directory_path + "\\" + song_subfolders + "\\" + os.path.basename(pak_files[i]), is_enabled=False, debug_print=DEBUG)
             insert_song_into_db(db_connection, song)
             continue
             #continue
-        song = get_song_info(pak_files[i], not is_disabled_directory, False)
+        song = get_song_info(pak_files[i], not is_disabled_directory, debug_print=DEBUG)
         #song.print()
         if is_disabled_directory:
             song.is_enabled = False
 
         insert_song_into_db(db_connection, song)
+    if DEBUG:
+        print("END create_db_from_files")
     #db_connection.commit()
 
 # Gets the newest modified date of a given folder and all subfolders within
 def get_newest_subfolder_date(base_folder):
+    if DEBUG:
+        print("BEGIN get_newest_subfolder_date")
     sub_path_dates = []
     sub_path_dates.append(pathlib.Path(base_folder).stat().st_mtime)
     for (root, dirs, files) in os.walk(base_folder):
@@ -465,13 +516,25 @@ def get_newest_subfolder_date(base_folder):
             #for file in files:
                 #print(file)
             sub_path_dates.append(pathlib.Path(root + "\\" + dir).stat().st_mtime)
-
+    if DEBUG:
+        print("END get_newest_subfolder_date")
     return max(sub_path_dates)
 
 # Initializes the database, creating the main table as needed, etc.
 def init_database(database_location, pak_directory, disabled_directory, force_update):
+    if DEBUG:
+        print("BEGIN init_database")
     db_folder_path = os.path.dirname(database_location)
     pathlib.Path(db_folder_path).mkdir(parents=True, exist_ok=True)
+    if DEBUG:
+        print("DATABASE FOLDER PATH:")
+        print(db_folder_path)
+        print("PAK DIRECTORY (custom songs folder):")
+        print(pak_directory)
+        print("DISABLED SONGS DIRECTORY:")
+        print(disabled_directory)
+        print("FORCE UPDATE?")
+        print(force_update)
     connection = create_db_connection(database_location)
     # if database exists, load it into memory
     # check if new songs exist (i.e. compare files in pak directory to files in database. if not an exact match, refresh database (define this later))
@@ -522,10 +585,14 @@ def init_database(database_location, pak_directory, disabled_directory, force_up
     #new_files_exist = True
     # get number of items from database
     if (number_of_songs == 0):
+        if DEBUG:
+            print("NO SONGS FOUND, INIT FROM FILES")
         create_db_from_files(pak_directory, connection, False, disabled_directory)
         create_db_from_files(disabled_directory, connection, True, disabled_directory)
         return connection
     if (new_files_exist):
+        if DEBUG:
+            print("SONGS FOUND, ADDING NEW SONGS")
         # clear existing database and rebuild
         #execute_db_query(connection, "DELETE FROM songs;")
 
@@ -577,15 +644,15 @@ def init_database(database_location, pak_directory, disabled_directory, force_up
                 if (len(song_subfolders) > 0):
                     pathlib.Path(disabled_directory + "\\" + song_subfolders).mkdir(parents=True, exist_ok=True)
                     shutil.move(file_path + "\\" + song_item + ".pak", disabled_directory + "\\" + song_subfolders)
-                    song = get_song_info(disabled_directory + "\\" + song_subfolders + "\\" + song_item + ".pak", False, False)
+                    song = get_song_info(disabled_directory + "\\" + song_subfolders + "\\" + song_item + ".pak", is_enabled=False, debug_print=DEBUG)
                 else:
                     shutil.move(file_path + "\\" + song_item + ".pak", disabled_directory + "\\" + os.path.basename(file_path))
-                    song = get_song_info(disabled_directory + "\\" + song_item + ".pak", False, False)
+                    song = get_song_info(disabled_directory + "\\" + song_item + ".pak", is_enabled=False, debug_print=DEBUG)
                 song.print()
                 insert_song_into_db(connection, song)
             else:
             #print("SONG IS IN ENABLED PATH")
-                song_object = get_song_info(file_path + "\\" + song_item + ".pak", True, False)
+                song_object = get_song_info(file_path + "\\" + song_item + ".pak", is_enabled=True, debug_print=DEBUG)
                 insert_song_into_db(connection, song_object)
             db_song_list.append(song_item)
 
@@ -601,10 +668,10 @@ def init_database(database_location, pak_directory, disabled_directory, force_up
             sig_file = file_path + "\\" + song_item + ".sig"
             if not os.path.exists(sig_file):
                 print("The file \n" + song_item + ".pak\nis missing the requisite .sig file\n" + sig_file + ".\nEnsure this .sig file exists and run program again to allow for song to be enabled.\nThis song has been disabled for now.")
-                song = get_song_info(file_path, False, False)
+                song = get_song_info(file_path, is_enabled=False, debug_print=DEBUG)
                 insert_song_into_db(connection, song)
             else:
-                song_object = get_song_info(file_path + "\\" + song_item + ".pak", False, False)
+                song_object = get_song_info(file_path + "\\" + song_item + ".pak", is_enabled=False, debug_print=DEBUG)
                 insert_song_into_db(connection, song_object)
                 
             db_song_list.append(song_item)
@@ -612,8 +679,15 @@ def init_database(database_location, pak_directory, disabled_directory, force_up
         # songs that exist locally and are in database after previous steps
         all_songs_in_dirs = list_ops.union(enabled_songs_in_dir, disabled_songs_in_dir)
         all_songs_in_dirs = list_ops.union(all_songs_in_dirs, broken_enabled_songs)
+        if DEBUG:
+            print("SONGS FOUND:")
+            print(all_songs_in_dirs)
         # songs that only exist in database, may have more items than songs in dirs
         songs_only_in_db = list_ops.difference(db_song_list, all_songs_in_dirs)
+        if DEBUG:
+            print("SONGS IN DATABASE BUT NOT IN FILE SYSTEM:")
+            print(songs_only_in_db)
+        
         for song_item in songs_only_in_db:
             # if db_song_list[i] not in enabled_songs AND not in disabled_songs (covered by above statements)
             # delete row in songs where filename = db_song_list[i]
@@ -643,9 +717,9 @@ def init_database(database_location, pak_directory, disabled_directory, force_up
         # as this will get a list of all items that are in the directory, but not the database.
         # for the second step, we do a right outer join on the file names (all items in database that aren't in directory)
         # NOTE: "directory" in this case would be the union of the enabled and disabled paths
-
         
-
+    if DEBUG:
+        print("END init_database")
     return connection
 
 #print(get_newest_file_date(pak_directory))

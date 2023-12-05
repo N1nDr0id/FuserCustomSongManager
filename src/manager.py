@@ -19,9 +19,13 @@ import webbrowser
 from update_checker import check_for_update
 
 # FUSER CUSTOM SONG MANAGER, by Lilly :)
-version_number = "v1.1.0"
+version_number = "v1.1.1"
+
+# global debug constant
+DEBUG = False
 
 fuser_process_name = "Fuser-Win64-Shipping.exe"
+fuser_alt_process_name = "FuserEOS-Win64-Shipping.exe"
 
 startupinfo_hideconsole = subprocess.STARTUPINFO()
 startupinfo_hideconsole.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -45,19 +49,29 @@ def bool_to_checkbox_text(value):
 
 # Taken from https://stackoverflow.com/a/29275361
 def process_exists(process_name):
+    if DEBUG:
+        print("BEGIN process_exists")
     call = 'TASKLIST', '/FI', 'imagename eq %s' % process_name
     # use buildin check_output right away
     output = subprocess.check_output(call, startupinfo=startupinfo_hideconsole).decode(encoding=sys.stdout.encoding)
     # check in last line for process name
     last_line = output.strip().split('\r\n')[-1]
     # because Fail message could be translated
+    if DEBUG:
+        print("END process_exists")
     return last_line.lower().startswith(process_name.lower())
 
-def process_exists_2(process_name):
+def process_exists_2(process_name, alt_process_name):
+    if DEBUG:
+        print("BEGIN process_exists_2")
     progs = str(subprocess.check_output('tasklist', startupinfo=startupinfo_hideconsole))
-    if process_name in progs:
+    if (process_name in progs) or (alt_process_name in progs):
+        if DEBUG:
+            print("END process_exists_2")
         return True
     else:
+        if DEBUG:
+            print("END process_exists_2")
         return False
 
 # Song edit dialog window, which appears when editing a song's info (rating, enabled/disabled state, etc)
@@ -96,7 +110,7 @@ class SongEditDialog(simpledialog.Dialog):
         #print(self.song_info)
         #is_enabled_var.set() #☑☐
         self.is_enabled_checkbutton = ttk.Checkbutton(entry_section, text="Enabled?", variable=self.is_enabled_var)
-        if (process_exists_2(fuser_process_name)):
+        if (process_exists_2(fuser_process_name, fuser_alt_process_name)):
             print("Process is currently running")
             self.is_enabled_checkbutton.configure(state=tk.DISABLED)
         else:
@@ -209,6 +223,8 @@ def get_two_nums_from_input(var1, var2, search_type_string):
 # First time popup window, which appears when launching the manager for the first time
 class FirstTimePopup(tk.Toplevel):
     def get_data(self):
+        if DEBUG:
+            print("OK ON FIRST TIME POPUP")
         if (len(self.fuser_path_string.get()) == 0):
             messagebox.showerror("Fuser path missing!", "Fuser install path is left blank.\nPlease try again.")
             return
@@ -220,6 +236,9 @@ class FirstTimePopup(tk.Toplevel):
             self.result = (self.fuser_path_string.get().replace("/", "\\"), None, self.executable_path_string.get().replace("/", "\\"), self.install_type_string.get())    
         else:
             self.result = (self.fuser_path_string.get().replace("/", "\\"), self.disabled_path_string.get().replace("/", "\\"), self.executable_path_string.get().replace("/", "\\"), self.install_type_string.get())
+        if DEBUG:
+            print("RESULTS FROM FIRST TIME POPUP:")
+            print(self.result)
         messagebox.showinfo("Initial startup", "Since this is the first time the program has been run, it needs to initialize the database with all of your existing songs, if you have any.\nThis may take a moment. The manager may appear momentarily frozen while the database is set up.\nPress OK to continue.")
         self.destroy()
 
@@ -233,7 +252,7 @@ class FirstTimePopup(tk.Toplevel):
         # Info labels
         label = ttk.Label(self, text="Welcome to the Fuser Custom Song Manager!\nIt appears this is your first time running the program.", justify="center")
         label.pack(padx=20, pady=(20, 5), anchor=tk.CENTER)
-        label2_text = "Please select the following file paths:\n * Fuser install directory (i.e. C:\\Program Files (x86)\\Steam\\steamapps\\common\\Fuser, the folder containing \"Fuser.exe\")\n * Disabled songs path (where you would like your disabled songs to be placed.)\n    * If left blank, this will default to (your fuser install)\\Fuser\\Content\\Paks\\disabled_songs.\n * Install type\n * Executable path (optional)\n    * If running locally via an .exe or .bat file, make sure to fill this out."
+        label2_text = "Please select the following file paths:\n * Fuser install directory (i.e. C:\\Program Files (x86)\\Steam\\steamapps\\common\\Fuser, the folder containing \"Fuser.exe\")\n * Disabled songs path (where you would like your disabled songs to be placed.)\n    * If left blank, this will default to (your fuser install)\\Fuser\\Content\\Paks\\disabled_songs.\n * Install type\n    * If you purchased the game before it was delisted, select either Steam or Epic depending on where you bought it. Otherwise, select Local.\n * Executable path (optional)\n    * If running locally via an .exe or .bat file, make sure to fill this out. This should be the executable or batch file you use to start the game."
         label2 = ttk.Label(self, text=label2_text, justify="left")
         label2.pack(fill="both", expand=True, padx=20, pady=(5, 10))
 
@@ -427,6 +446,8 @@ class SearchDialog(simpledialog.Dialog):
         return self.search_song_name_entry # initial focus
 
     def apply(self):
+        if DEBUG:
+            print("OK ON SEARCH POPUP")
         query = 'SELECT * from songs WHERE '
         remaining_query = ''
 
@@ -481,6 +502,9 @@ class SearchDialog(simpledialog.Dialog):
         query += remaining_query
         # Save query result for use later
         self.result = query
+        if DEBUG:
+            print("SEARCH QUERY:")
+            print(self.result)
 
 
 #--------------------------------
@@ -549,25 +573,38 @@ def refresh_list(clear_button):
 
 # Launches the game and deletes custom song cache if it exists
 def launch_fuser():
+    if DEBUG:
+        print("BEGIN launch_fuser")
     # delete custom songs cache if it exists
     if os.path.exists(prog_properties.pak_directory + "\\customSongsUnlocked_P.pak"):
         os.remove(prog_properties.pak_directory + "\\customSongsUnlocked_P.pak")
     if os.path.exists(prog_properties.pak_directory + "\\customSongsUnlocked_P.sig"):
         os.remove(prog_properties.pak_directory + "\\customSongsUnlocked_P.sig")
 
+    if DEBUG:
+        print("LAUNCHER TYPE:")
+        print(prog_properties.launcher_type.name)
+
     if (prog_properties.launcher_type == LauncherType.Steam):
         subprocess.run("cmd /c start steam://run/1331440", startupinfo=startupinfo_hideconsole)
     elif (prog_properties.launcher_type == LauncherType.Epic):
         messagebox.showerror("Fuser on Epic", "Currently, we do not support launching Fuser through this program if it's installed via the Epic Games Launcher.\nPlease launch Fuser through the Epic Games Launcher instead.")
-        #subprocess.run("cmd /c start com.epicgames.launcher://apps/" + "?action=launch&silent=true")
+        #subprocess.run("cmd /c start com.epicgames.launcher://apps/" + 2939f4752d4b4ace95a8e1b16e79d3f5 + "?action=launch&silent=true")
+        # the above may be correct, have yet to verify this!
     elif (prog_properties.launcher_type == LauncherType.Local):
+        if DEBUG:
+            print("STARTING FILE " + prog_properties.executable_path)
+        #old_cwd = application_path
+        os.chdir(os.path.dirname(prog_properties.executable_path))
         subprocess.Popen(prog_properties.executable_path, startupinfo=startupinfo_hideconsole)
+        os.chdir(application_path)
 
 # Loops through all songs selected and places them into the enabled songs directory, whether those songs are .pak/.sig files or archives (.zip, .rar, or .7z)
 def add_song(treeview, prog_properties):
-
+    if DEBUG:
+        print("BEGIN add_song")
     # Preemptive check to see if game is running before allowing songs to be selected
-    if (process_exists_2(fuser_process_name)):
+    if (process_exists_2(fuser_process_name, fuser_alt_process_name)):
         messagebox.showerror("Fuser currently running", "Fuser is currently running. Please quit the game to add new songs.")
         return
 
@@ -584,7 +621,7 @@ def add_song(treeview, prog_properties):
         return
     
     # check again in case game was launched after selecting files
-    if (process_exists_2(fuser_process_name)):
+    if (process_exists_2(fuser_process_name, fuser_alt_process_name)):
         messagebox.showerror("Fuser currently running", "Fuser is currently running. Please quit the game to add new songs.")
         return
 
@@ -670,6 +707,8 @@ def add_song(treeview, prog_properties):
         treeview.insert(parent="", index='end', iid=i, text="", values=db_songs[i])
 
     connection.close()
+    if DEBUG:
+        print("END add_song")
 
 def edit_songs_button_handler():
     selected_items = songs_table_tree.selection()
@@ -765,13 +804,19 @@ def clear_search(clear_button):
     clear_button.configure(state='disabled')
 
 def manager_update_check():
+    if DEBUG:
+        print("BEGIN manager_update_check")
     new_version_string = check_for_update(version_number)
-    print(new_version_string)
+    if DEBUG:
+        print("NEW VERSION:")
+        print(new_version_string)
     if new_version_string != None:
         update_text = f"A new version of the Fuser Custom Song Manager, {new_version_string}, is available! Would you like to view the latest release?"
         result = messagebox.askquestion("Update available!", update_text)
         if (result == 'yes'):
             webbrowser.open_new_tab("https://github.com/N1nDr0id/FuserCustomSongManager/releases/latest")
+    if DEBUG:
+        print("END manager_update_check")
 
 def show_about():
     popup = tk.Toplevel()
@@ -914,7 +959,7 @@ def do_treeview_rmb_popup(e):
         songs_table_tree.selection_set(item)
         songs_table_tree.focus_set()
         songs_table_tree.focus(item)
-        if (process_exists_2(fuser_process_name)):
+        if (process_exists_2(fuser_process_name, fuser_alt_process_name)):
             table_rmb_menu.entryconfig(1, state=tk.DISABLED)
             table_rmb_menu.entryconfig(2, state=tk.DISABLED)
         else:
@@ -933,7 +978,7 @@ def update_row(iid, song_info, updated_info, check_if_fuser_running):
     new_song_info[11] = updated_info[3]
 
     if (check_if_fuser_running):
-        if (process_exists_2(fuser_process_name) and checkbox_to_bool(song_info[8]) != checkbox_to_bool(new_song_info[8])):
+        if (process_exists_2(fuser_process_name, fuser_alt_process_name) and checkbox_to_bool(song_info[8]) != checkbox_to_bool(new_song_info[8])):
             # if the user wants to enable the song
             if (checkbox_to_bool(new_song_info[8])):
                 messagebox.showerror("Fuser currently running", "Fuser is currently running. This song will not be enabled at this time.\nPlease quit the game to enable this song.")
@@ -1096,7 +1141,7 @@ def delete_song():
     if (len(selected_song_iids) == 0):
         return
     
-    if (process_exists_2(fuser_process_name)):
+    if (process_exists_2(fuser_process_name, fuser_alt_process_name)):
         messagebox.showerror("Fuser currently running", "Fuser is currently running. This song will not be deleted at this time.\nPlease quit the game to delete this song.")
         return
     
