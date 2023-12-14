@@ -19,7 +19,7 @@ import webbrowser
 from update_checker import check_for_update
 
 # FUSER CUSTOM SONG MANAGER, by Lilly :)
-version_number = "v1.1.1"
+version_number = "1.1.2"
 
 # global debug constant
 DEBUG = False
@@ -821,7 +821,7 @@ def clear_search(clear_button):
     # disable clear button
     clear_button.configure(state='disabled')
 
-def manager_update_check():
+def manager_update_check(notify_no_update_available = False):
     if DEBUG:
         print("BEGIN manager_update_check")
     new_version_string = check_for_update(version_number)
@@ -829,10 +829,12 @@ def manager_update_check():
         print("NEW VERSION:")
         print(new_version_string)
     if new_version_string != None:
-        update_text = f"A new version of the Fuser Custom Song Manager, {new_version_string}, is available! Would you like to view the latest release?"
+        update_text = f"A new version of the Fuser Custom Song Manager, v{new_version_string}, is available! Would you like to view the latest release?"
         result = messagebox.askquestion("Update available!", update_text)
         if (result == 'yes'):
             webbrowser.open_new_tab("https://github.com/N1nDr0id/FuserCustomSongManager/releases/latest")
+    elif new_version_string == None and notify_no_update_available:
+        messagebox.showinfo("No new updates available", f"You are currently on the latest version of the program, v{version_number}.")
     if DEBUG:
         print("END manager_update_check")
 
@@ -843,7 +845,7 @@ def show_about():
     popup.title("About")
     popup.iconbitmap("gui_icons/program_icon.ico")
 
-    about_text = f"""Fuser Custom Song Manager, {version_number}
+    about_text = f"""Fuser Custom Song Manager, v{version_number}
 by N1nDr0id/Lilly.
 
 Made with love for the Fuser community. <3
@@ -858,7 +860,7 @@ as well as thanks to those who tested the program."""
     canvas.create_image(0, 0, anchor=tk.NW, image=popup.logo)
     ttk.Label(popup, text=about_text, justify=tk.CENTER).pack(padx=20, pady=10)
     buttons_frame = tk.Frame(popup)
-    button1 = ttk.Button(buttons_frame, text="Check for updates", command=manager_update_check)
+    button1 = ttk.Button(buttons_frame, text="Check for updates", command=lambda: manager_update_check(True))
     button2 = ttk.Button(buttons_frame, text="View on GitHub", command=lambda: webbrowser.open_new_tab("https://github.com/N1nDr0id/FuserCustomSongManager"))
     button3 = ttk.Button(buttons_frame, text="Latest release", command=lambda: webbrowser.open_new_tab("https://github.com/N1nDr0id/FuserCustomSongManager/releases/latest"))
     button1.grid(row=0, column=0)
