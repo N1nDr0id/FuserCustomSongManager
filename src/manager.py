@@ -182,7 +182,8 @@ def paste_folder_name(string_var):
 
     folder_name = fd.askdirectory(parent=temp_window)
     temp_window.destroy()
-    string_var.set(folder_name)
+    if (folder_name != ''):
+        string_var.set(folder_name)
 
 def paste_file_name(string_var):
     filetypes = (
@@ -190,7 +191,8 @@ def paste_file_name(string_var):
         ('Executable files', '*.bat')
     )
     file_name = fd.askopenfilename(filetypes=filetypes)
-    string_var.set(file_name)
+    if (file_name != ''):
+        string_var.set(file_name)
 
 def is_archive(path_to_file):
     return (path_to_file.endswith(".zip") or path_to_file.endswith(".rar") or path_to_file.endswith(".7z"))
