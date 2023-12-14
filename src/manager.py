@@ -165,7 +165,23 @@ class SongEditDialog(simpledialog.Dialog):
 
 # more helper functions
 def paste_folder_name(string_var):
-    folder_name = fd.askdirectory()
+
+    # potential fix for issue where you can open multiple folder dialogs at once taken from here: https://stackoverflow.com/a/7090747
+    temp_window = tk.Toplevel()
+    temp_window.withdraw()
+
+    temp_window.overrideredirect(True)
+    temp_window.geometry('0x0+0+0')
+
+    # Show window again and lift it to top so it can get focus,
+    # otherwise dialogs will end up behind the terminal.
+    temp_window.deiconify()
+    temp_window.lift()
+    temp_window.focus_force()
+    temp_window.grab_set()
+
+    folder_name = fd.askdirectory(parent=temp_window)
+    temp_window.destroy()
     string_var.set(folder_name)
 
 def paste_file_name(string_var):
