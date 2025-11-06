@@ -344,6 +344,13 @@ def get_song_info(file_location, is_enabled, debug_print):
             song_artist = data_final[3][3][2][0][0].decode(data_final[3][3][2][0][1])[:-1] # artist
             #song_artist = data_final[3][3][2][0]
             song_genre = data_final[4][3][1][1][8:-1].decode() # genre
+            
+            # New fixes for genre update
+            if song_genre == 'Num':
+                song_genre = 'Indie'
+            if song_genre == 'None':
+                song_genre = 'Other'
+
             #print(type(song_genre))
             song_year = data_final[5][3] # year
             if debug_print:

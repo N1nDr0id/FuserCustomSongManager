@@ -19,7 +19,7 @@ import webbrowser
 from update_checker import check_for_update
 
 # FUSER CUSTOM SONG MANAGER, by Lilly :)
-version_number = "1.1.2"
+version_number = "1.1.3"
 
 # global debug constant
 DEBUG = False
@@ -427,7 +427,7 @@ class SearchDialog(simpledialog.Dialog):
         tk.Label(genre_frame, text="Genre:").grid(row=0, column=0, sticky='w')
         self.genre_var = tk.StringVar()
         self.search_genre_combo = ttk.Combobox(genre_frame, state='readonly', textvariable=self.genre_var)
-        self.search_genre_combo['values'] = ('', 'Classical', 'Country', 'Rock', 'LatinAndCaribbean', 'Pop', 'RnB', 'HipHop', 'Dance')
+        self.search_genre_combo['values'] = ('', 'Classical', 'Country', 'Rock', 'LatinAndCaribbean', 'Pop', 'RnB', 'HipHop', 'Dance', 'Indie/Alternative', 'Other')
         self.search_genre_combo.grid(row=0, column=1)
 
         # Key/mode search (in single page) using two dropdowns
@@ -510,7 +510,10 @@ class SearchDialog(simpledialog.Dialog):
 
         if (len(self.genre_var.get()) != 0):
             genre_string = self.genre_var.get()
-            genre_int = Genres[genre_string].value
+            if genre_string == "Indie/Alternative":
+                genre_int = 8
+            else:
+                genre_int = Genres[genre_string].value
             queries.append(f"genre = {genre_int}")
 
         # Get the final remaining query and add it onto the beginning query

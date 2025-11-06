@@ -19,6 +19,8 @@ class Genres(Enum):
     RnB = 5
     HipHop = 6
     Dance = 7
+    Indie = 8
+    Other = 9
 
 class SongMode(Enum):
     Major = 0
